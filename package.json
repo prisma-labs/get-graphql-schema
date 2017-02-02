@@ -5,12 +5,16 @@
     "README.md",
     "dist/"
   ],
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Downloads the GraphQL Schema of an GraphQL endpoint URL",
   "scripts": {
     "build": "tsc",
     "prepublish": "npm run build && chmod +x dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/graphcool/get-graphql-schema.git"
   },
   "author": "Johannes Schickling <johannes@graph.cool>",
   "license": "MIT",

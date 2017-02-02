@@ -1,5 +1,7 @@
 # get-graphql-schema
 
+Downloads the GraphQL Schema of an GraphQL endpoint URL
+
 ## Install
 
 ```sh
