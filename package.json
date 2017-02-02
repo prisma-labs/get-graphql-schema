@@ -1,0 +1,27 @@
+{
+  "name": "get-graphql-schema",
+  "bin": "dist/index.js",
+  "files": [
+    "README.md",
+    "dist/"
+  ],
+  "version": "1.0.0",
+  "description": "Downloads the GraphQL Schema of an GraphQL endpoint URL",
+  "scripts": {
+    "build": "tsc",
+    "prepublish": "npm run build && chmod +x dist/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Johannes Schickling <johannes@graph.cool>",
+  "license": "MIT",
+  "dependencies": {
+    "@types/graphql": "^0.8.6",
+    "@types/node": "^7.0.4",
+    "@types/node-fetch": "^1.6.7",
+    "graphql": "^0.9.1",
+    "node-fetch": "^1.6.3"
+  },
+  "devDependencies": {
+    "typescript": "^2.1.5"
+  }
+}
