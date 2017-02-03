@@ -1,4 +1,4 @@
-# get-graphql-schema
+# get-graphql-schema [![npm version](https://badge.fury.io/js/get-graphql-schema.svg)](https://badge.fury.io/js/get-graphql-schema)
 
 Downloads the GraphQL Schema of an GraphQL endpoint URL
 
