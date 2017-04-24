@@ -1,6 +1,6 @@
 # get-graphql-schema [![npm version](https://badge.fury.io/js/get-graphql-schema.svg)](https://badge.fury.io/js/get-graphql-schema)
 
-Downloads the GraphQL Schema of an GraphQL endpoint URL
+Fetch and print the GraphQL schema from a GraphQL HTTP endpoint
 
 ## Install
 
@@ -11,7 +11,15 @@ npm install -g get-graphql-schema
 ## Usage
 
 ```sh
-get-graphql-schema ENDPOINT_URL > schema.json
+  Usage: get-graphql-schema ENDPOINT_URL > schema.graphql
+
+  Fetch and print the GraphQL schema from a GraphQL HTTP endpoint
+  (Outputs schema in IDL syntax by default)
+
+  Options:
+    --json, -j      Output in JSON format (based on introspection query)
+    --version, -v   Print version of get-graphql-schema
+
 ```
 
 ## Help & Community [![Slack Status](https://slack.graph.cool/badge.svg)](https://slack.graph.cool)
