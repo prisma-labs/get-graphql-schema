@@ -1,6 +1,6 @@
 # get-graphql-schema [![npm version](https://badge.fury.io/js/get-graphql-schema.svg)](https://badge.fury.io/js/get-graphql-schema)
 
-Fetch and print the GraphQL schema from a GraphQL HTTP endpoint
+Fetch and print the GraphQL schema from a GraphQL HTTP endpoint. (Can be used for Relay Modern.)
 
 ## Install
 
