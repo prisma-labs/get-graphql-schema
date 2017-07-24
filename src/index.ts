@@ -7,14 +7,17 @@ import { printSchema } from 'graphql/utilities/schemaPrinter'
 import * as minimist from 'minimist'
 import * as chalk from 'chalk'
 
-const {version} = require('../package.json')
+const { version } = require('../package.json')
 
 const usage = `  Usage: get-graphql-schema ENDPOINT_URL > schema.graphql
 
-  ${chalk.bold('Fetch and print the GraphQL schema from a GraphQL HTTP endpoint')}
+  ${chalk.bold(
+    'Fetch and print the GraphQL schema from a GraphQL HTTP endpoint',
+  )}
   (Outputs schema in IDL syntax by default)
 
   Options:
+    --header, -h    Add a custom header (ex. 'X-API-KEY=ABC123'), can be used multiple times
     --json, -j      Output in JSON format (based on introspection query)
     --version, -v   Print version of get-graphql-schema
 `
@@ -34,11 +37,21 @@ async function main() {
 
   const endpoint = argv._[0]
 
+  const defaultHeaders = {
+    'Content-Type': 'application/json',
+  }
+
+  const headers = toArray(argv['header'])
+    .concat(toArray(argv['h']))
+    .reduce((obj, header: string) => {
+      const [key, value] = header.split('=')
+      obj[key] = value
+      return obj
+    }, defaultHeaders)
+
   const response = await fetch(endpoint, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers: headers,
     body: JSON.stringify({ query: introspectionQuery }),
   })
 
@@ -54,7 +67,10 @@ async function main() {
     const schema = buildClientSchema(data)
     console.log(printSchema(schema))
   }
+}
 
+function toArray(value = []) {
+  return Array.isArray(value) ? value : [value]
 }
 
 main().catch(e => console.error(e))
