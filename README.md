@@ -11,12 +11,13 @@ npm install -g get-graphql-schema
 ## Usage
 
 ```sh
-  Usage: get-graphql-schema ENDPOINT_URL > schema.graphql
+  Usage: get-graphql-schema [OPTIONS] ENDPOINT_URL > schema.graphql
 
   Fetch and print the GraphQL schema from a GraphQL HTTP endpoint
   (Outputs schema in IDL syntax by default)
 
   Options:
+    --header, -h    Add a custom header (ex. 'X-API-KEY=ABC123'), can be used multiple times
     --json, -j      Output in JSON format (based on introspection query)
     --version, -v   Print version of get-graphql-schema
 
