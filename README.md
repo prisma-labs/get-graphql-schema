@@ -2,6 +2,9 @@
 
 Fetch and print the GraphQL schema from a GraphQL HTTP endpoint. (Can be used for Relay Modern.)
 
+
+> **Note**: Consider using [`graphql-cli`](https://github.com/graphcool/graphql-cli) instead for improved workflows.
+
 ## Install
 
 ```sh
