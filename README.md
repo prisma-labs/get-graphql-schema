@@ -1,5 +1,7 @@
 # get-graphql-schema [![npm version](https://badge.fury.io/js/get-graphql-schema.svg)](https://badge.fury.io/js/get-graphql-schema)
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/graphcool/get-graphql-schema.svg)](https://greenkeeper.io/)
+
 Fetch and print the GraphQL schema from a GraphQL HTTP endpoint. (Can be used for Relay Modern.)
 
 
