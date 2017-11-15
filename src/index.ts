@@ -1,11 +1,15 @@
 #!/usr/bin/env node
 
 import fetch from 'node-fetch'
+import { graphql } from 'graphql'
 import { introspectionQuery } from 'graphql/utilities/introspectionQuery'
 import { buildClientSchema } from 'graphql/utilities/buildClientSchema'
+import { buildSchema } from 'graphql/utilities/buildASTSchema'
 import { printSchema } from 'graphql/utilities/schemaPrinter'
 import * as minimist from 'minimist'
 import * as chalk from 'chalk'
+import * as fs from 'fs'
+import * as url from 'url'
 
 const { version } = require('../package.json')
 
@@ -15,6 +19,8 @@ const usage = `  Usage: get-graphql-schema ENDPOINT_URL > schema.graphql
     'Fetch and print the GraphQL schema from a GraphQL HTTP endpoint',
   )}
   (Outputs schema in IDL syntax by default)
+
+  If ENDPOINT_URL has file: protocol, it should point to a local schema in .json or .graphql (IDL) syntax.
 
   Options:
     --header, -h    Add a custom header (ex. 'X-API-KEY=ABC123'), can be used multiple times
@@ -35,7 +41,42 @@ async function main() {
     process.exit(0)
   }
 
+  const { data, errors } = await fetchSchema(argv)
+
+  if (errors) {
+    throw new Error(JSON.stringify(errors, null, 2))
+  }
+
+  if (argv['j'] || argv['json']) {
+    console.log(JSON.stringify(data, null, 2))
+  } else {
+    const schema = buildClientSchema(data)
+    console.log(printSchema(schema))
+  }
+}
+
+async function fetchSchema(argv) {
   const endpoint = argv._[0]
+
+  const endpointUrl = url.parse(endpoint)
+  if(endpointUrl.protocol == "file:") {
+    // Reading the schema from a file allows for conversion between .json and
+    // .graphql formats without needing to fetch the schema via HTTP first
+    const schemaPath = endpointUrl.path as string
+    if(fs.existsSync(schemaPath)) {
+      const contents = fs.readFileSync(schemaPath, 'utf8')
+      if(schemaPath.endsWith(".json")) {
+        return JSON.parse(contents)
+      } else if(schemaPath.endsWith(".graphql")) {
+        const schema = buildSchema(contents)
+        var introspectionResult = await graphql(schema, introspectionQuery)
+        return introspectionResult
+      }
+      return {errors: "file: protocol only supports reading .json or .graphql (IDL) schemas"}
+    } else {
+      return {errors: schemaPath + " does not exist"}
+    }
+  }
 
   const defaultHeaders = {
     'Content-Type': 'application/json',
@@ -54,19 +95,7 @@ async function main() {
     headers: headers,
     body: JSON.stringify({ query: introspectionQuery }),
   })
-
-  const { data, errors } = await response.json()
-
-  if (errors) {
-    throw new Error(JSON.stringify(errors, null, 2))
-  }
-
-  if (argv['j'] || argv['json']) {
-    console.log(JSON.stringify(data, null, 2))
-  } else {
-    const schema = buildClientSchema(data)
-    console.log(printSchema(schema))
-  }
+  return response.json()
 }
 
 function toArray(value = []) {
