@@ -66,7 +66,7 @@ async function fetchSchema(argv) {
     if(fs.existsSync(schemaPath)) {
       const contents = fs.readFileSync(schemaPath, 'utf8')
       if(schemaPath.endsWith(".json")) {
-        return JSON.parse(contents)
+        return {data: JSON.parse(contents)}
       } else if(schemaPath.endsWith(".graphql")) {
         const schema = buildSchema(contents)
         var introspectionResult = await graphql(schema, introspectionQuery)
