@@ -6,6 +6,7 @@ import { buildClientSchema } from 'graphql/utilities/buildClientSchema'
 import { printSchema } from 'graphql/utilities/schemaPrinter'
 import * as minimist from 'minimist'
 import * as chalk from 'chalk'
+import https from 'https'
 
 const { version } = require('../package.json')
 
@@ -20,10 +21,12 @@ const usage = `  Usage: get-graphql-schema ENDPOINT_URL > schema.graphql
     --header, -h    Add a custom header (ex. 'X-API-KEY=ABC123'), can be used multiple times
     --json, -j      Output in JSON format (based on introspection query)
     --version, -v   Print version of get-graphql-schema
+    --insecure -k   Turn off curl's verification of the certificate
 `
 
 async function main() {
   const argv = minimist(process.argv.slice(2))
+  let agent
 
   if (argv._.length < 1) {
     console.log(usage)
@@ -35,7 +38,13 @@ async function main() {
     process.exit(0)
   }
 
-  const endpoint = argv._[0]
+  if (argv['insecure'] || argv['k']) {
+    agent = new https.Agent({
+       rejectUnauthorized: false
+    })
+  }
+
+    const endpoint = argv._[0]
 
   const defaultHeaders = {
     'Content-Type': 'application/json',
@@ -53,6 +62,7 @@ async function main() {
     method: 'POST',
     headers: headers,
     body: JSON.stringify({ query: introspectionQuery }),
+    agent: agent
   })
 
   const { data, errors } = await response.json()
