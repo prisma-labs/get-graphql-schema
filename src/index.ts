@@ -18,6 +18,7 @@ const usage = `  Usage: get-graphql-schema ENDPOINT_URL > schema.graphql
 
   Options:
     --header, -h    Add a custom header (ex. 'X-API-KEY=ABC123'), can be used multiple times
+    --method, -m    Use a different HTTP method in the request (default POST)
     --json, -j      Output in JSON format (based on introspection query)
     --version, -v   Print version of get-graphql-schema
 `
@@ -41,6 +42,8 @@ async function main() {
     'Content-Type': 'application/json',
   }
 
+  const method = argv['method'] || argv['m'] || 'POST';
+
   const headers = toArray(argv['header'])
     .concat(toArray(argv['h']))
     .reduce((obj, header: string) => {
@@ -50,7 +53,7 @@ async function main() {
     }, defaultHeaders)
 
   const response = await fetch(endpoint, {
-    method: 'POST',
+    method: method,
     headers: headers,
     body: JSON.stringify({ query: introspectionQuery }),
   })
