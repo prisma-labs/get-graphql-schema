@@ -44,8 +44,12 @@ async function main() {
   const headers = toArray(argv['header'])
     .concat(toArray(argv['h']))
     .reduce((obj, header: string) => {
-      const [key, value] = header.split('=')
-      obj[key] = value
+      const m = header.match(/(.*?)=(.*)/)
+
+      if (m) {
+        obj[m[1]] = m[2]
+      }
+
       return obj
     }, defaultHeaders)
 
