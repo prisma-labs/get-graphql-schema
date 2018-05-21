@@ -44,7 +44,7 @@ async function main() {
   const headers = toArray(argv['header'])
     .concat(toArray(argv['h']))
     .reduce((obj, header: string) => {
-      const [key, value] = header.split('=')
+      const [key, value] = header.split(':')
       obj[key] = value
       return obj
     }, defaultHeaders)
