@@ -23,7 +23,14 @@ const usage = `  Usage: get-graphql-schema ENDPOINT_URL > schema.graphql
 `
 
 async function main() {
-  const argv = minimist(process.argv.slice(2))
+  const argv = minimist(process.argv.slice(2), {
+    alias: {
+      h: 'header',
+      j: 'json',
+      v: 'version'
+    },
+    boolean: ['json', 'version']
+  })
 
   if (argv._.length < 1) {
     console.log(usage)
