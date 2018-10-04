@@ -24,51 +24,58 @@ const usage = `  Usage: get-graphql-schema ENDPOINT_URL > schema.graphql
 `
 
 async function main() {
-  const argv = minimist(process.argv.slice(2))
+  try {
+    const argv = minimist(process.argv.slice(2))
 
-  if (argv._.length < 1) {
-    console.log(usage)
-    return
+    if (argv._.length < 1) {
+      console.log(usage)
+      return
+    }
+
+    if (argv['version'] || argv['v']) {
+      console.log(version)
+      process.exit(0)
+    }
+
+    const endpoint = argv._[0]
+
+    const defaultHeaders = {
+      'Content-Type': 'application/json',
+    }
+
+    const method = argv['method'] || argv['m'] || 'POST';
+
+    const headers = toArray(argv['header'])
+      .concat(toArray(argv['h']))
+      .reduce((obj, header: string) => {
+        const [key, value] = header.split('=')
+        obj[key] = value
+        return obj
+      }, defaultHeaders)
+
+    const body = method === "GET" ? undefined : JSON.stringify({ query: introspectionQuery });
+
+    const response = await fetch(endpoint, {
+      method: method,
+      headers: headers,
+      body,
+    })
+
+    const { data, errors } = await response.json()
+
+    if (errors) {
+      throw new Error(JSON.stringify(errors, null, 2))
+    }
+
+    if (argv['j'] || argv['json']) {
+      console.log(JSON.stringify(data, null, 2))
+    } else {
+      const schema = buildClientSchema(data)
+      console.log(printSchema(schema))
+    }
   }
-
-  if (argv['version'] || argv['v']) {
-    console.log(version)
-    process.exit(0)
-  }
-
-  const endpoint = argv._[0]
-
-  const defaultHeaders = {
-    'Content-Type': 'application/json',
-  }
-
-  const method = argv['method'] || argv['m'] || 'POST';
-
-  const headers = toArray(argv['header'])
-    .concat(toArray(argv['h']))
-    .reduce((obj, header: string) => {
-      const [key, value] = header.split('=')
-      obj[key] = value
-      return obj
-    }, defaultHeaders)
-
-  const response = await fetch(endpoint, {
-    method: method,
-    headers: headers,
-    body: JSON.stringify({ query: introspectionQuery }),
-  })
-
-  const { data, errors } = await response.json()
-
-  if (errors) {
-    throw new Error(JSON.stringify(errors, null, 2))
-  }
-
-  if (argv['j'] || argv['json']) {
-    console.log(JSON.stringify(data, null, 2))
-  } else {
-    const schema = buildClientSchema(data)
-    console.log(printSchema(schema))
+  catch (err) {
+    console.error({ err });
   }
 }
 
