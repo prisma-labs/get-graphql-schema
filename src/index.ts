@@ -5,7 +5,7 @@ import { introspectionQuery } from 'graphql/utilities/introspectionQuery'
 import { buildClientSchema } from 'graphql/utilities/buildClientSchema'
 import { printSchema } from 'graphql/utilities/schemaPrinter'
 import * as minimist from 'minimist'
-import * as chalk from 'chalk'
+import chalk from 'chalk'
 
 const { version } = require('../package.json')
 

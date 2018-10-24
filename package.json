@@ -19,13 +19,13 @@
   "author": "Johannes Schickling <johannes@graph.cool>",
   "license": "MIT",
   "dependencies": {
-    "chalk": "^1.1.3",
+    "chalk": "^2.4.1",
     "graphql": "^0.9.1",
     "minimist": "^1.2.0",
     "node-fetch": "^1.6.3"
   },
   "devDependencies": {
-    "@types/chalk": "^0.4.31",
+    "@types/chalk": "^2.2.0",
     "@types/graphql": "^0.8.6",
     "@types/minimist": "^1.2.0",
     "@types/node": "^7.0.4",
