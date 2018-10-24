@@ -20,13 +20,13 @@
   "license": "MIT",
   "dependencies": {
     "chalk": "^2.4.1",
-    "graphql": "^0.9.1",
+    "graphql": "^14.0.2",
     "minimist": "^1.2.0",
     "node-fetch": "^2.2.0"
   },
   "devDependencies": {
     "@types/chalk": "^2.2.0",
-    "@types/graphql": "^0.8.6",
+    "@types/graphql": "^14.0.3",
     "@types/minimist": "^1.2.0",
     "@types/node": "^7.0.4",
     "@types/node-fetch": "^2.1.2",
