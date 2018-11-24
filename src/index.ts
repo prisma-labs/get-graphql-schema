@@ -7,6 +7,8 @@ import { printSchema } from 'graphql/utilities/schemaPrinter'
 import * as minimist from 'minimist'
 import chalk from 'chalk'
 
+const https = require("https");
+
 const { version } = require('../package.json')
 
 const usage = `  Usage: get-graphql-schema ENDPOINT_URL > schema.graphql
@@ -17,6 +19,7 @@ const usage = `  Usage: get-graphql-schema ENDPOINT_URL > schema.graphql
   (Outputs schema in IDL syntax by default)
 
   Options:
+    --allowUnsecureRequests Allows requests to unsecure connections
     --header, -h    Add a custom header (ex. 'X-API-KEY=ABC123'), can be used multiple times
     --json, -j      Output in JSON format (based on introspection query)
     --version, -v   Print version of get-graphql-schema
@@ -49,7 +52,14 @@ async function main() {
       return obj
     }, defaultHeaders)
 
+  let agent = undefined
+
+  if (argv['allowUnsecureRequests']) {
+    agent = new https.Agent({ rejectUnauthorized: false })
+  }
+
   const response = await fetch(endpoint, {
+    agent,
     method: 'POST',
     headers: headers,
     body: JSON.stringify({ query: introspectionQuery }),
