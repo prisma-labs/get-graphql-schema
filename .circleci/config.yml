@@ -1,0 +1,19 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: 'circleci/node:latest'
+    steps:
+      - checkout
+      - run:
+          name: install
+          command: yarn install
+      - run:
+          name: test
+          command: yarn test
+      - run:
+          name: coverage
+          command: yarn coverage
+      - run:
+          name: release
+          command: yarn release

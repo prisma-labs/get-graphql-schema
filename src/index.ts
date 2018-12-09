@@ -1,76 +1,106 @@
-#!/usr/bin/env node
-
 import fetch from 'node-fetch'
+import * as fs from 'fs'
+import * as path from 'path'
+import meow = require('meow')
+import mkdirp = require('mkdirp')
 import { introspectionQuery } from 'graphql/utilities/introspectionQuery'
 import { buildClientSchema } from 'graphql/utilities/buildClientSchema'
 import { printSchema } from 'graphql/utilities/schemaPrinter'
-import * as minimist from 'minimist'
-import chalk from 'chalk'
 
-const { version } = require('../package.json')
-
-const usage = `  Usage: get-graphql-schema ENDPOINT_URL > schema.graphql
-
-  ${chalk.bold(
-    'Fetch and print the GraphQL schema from a GraphQL HTTP endpoint',
-  )}
-  (Outputs schema in IDL syntax by default)
-
-  Options:
-    --header, -h    Add a custom header (ex. 'X-API-KEY=ABC123'), can be used multiple times
-    --json, -j      Output in JSON format (based on introspection query)
-    --version, -v   Print version of get-graphql-schema
-`
-
-async function main() {
-  const argv = minimist(process.argv.slice(2))
-
-  if (argv._.length < 1) {
-    console.log(usage)
-    return
-  }
-
-  if (argv['version'] || argv['v']) {
-    console.log(version)
-    process.exit(0)
-  }
-
-  const endpoint = argv._[0]
-
-  const defaultHeaders = {
-    'Content-Type': 'application/json',
-  }
-
-  const headers = toArray(argv['header'])
-    .concat(toArray(argv['h']))
-    .reduce((obj, header: string) => {
-      const [key, value] = header.split('=')
-      obj[key] = value
-      return obj
-    }, defaultHeaders)
-
-  const response = await fetch(endpoint, {
-    method: 'POST',
-    headers: headers,
-    body: JSON.stringify({ query: introspectionQuery }),
-  })
-
-  const { data, errors } = await response.json()
-
-  if (errors) {
-    throw new Error(JSON.stringify(errors, null, 2))
-  }
-
-  if (argv['j'] || argv['json']) {
-    console.log(JSON.stringify(data, null, 2))
-  } else {
-    const schema = buildClientSchema(data)
-    console.log(printSchema(schema))
+/**
+ *
+ * Normalizes header input from CLI
+ *
+ * @param cli
+ */
+export function getHeadersFromInput(
+  cli: meow.Result,
+): { key: string; value: string }[] {
+  switch (typeof cli.flags.header) {
+    case 'string': {
+      const [key, value] = cli.flags.header.split('=')
+      return [{ key, value }]
+    }
+    case 'object': {
+      return cli.flags.header.map(header => {
+        const [key, value] = header.split('=')
+        return { key, value }
+      })
+    }
+    default: {
+      return []
+    }
   }
 }
 
-function toArray(value = []) {
-  return Array.isArray(value) ? value : [value]
+interface Options {
+  method?: 'GET' | 'POST' | 'PUT' | 'DELETE'
+  headers?: { [key: string]: string }
+  json?: boolean
 }
 
-main().catch(e => console.error(e))
+/**
+ *
+ * Fetch remote schema and turn it into string
+ *
+ * @param endpoint
+ * @param options
+ */
+export async function getRemoteSchema(
+  endpoint: string,
+  options: Options,
+): Promise<
+  { status: 'ok'; schema: string } | { status: 'err'; message: string }
+> {
+  try {
+    const { data, errors } = await fetch(endpoint, {
+      method: options.method,
+      headers: options.headers,
+      body: JSON.stringify({ query: introspectionQuery }),
+    }).then(res => res.json())
+
+    if (errors) {
+      return { status: 'err', message: JSON.stringify(errors, null, 2) }
+    }
+
+    if (options.json) {
+      return {
+        status: 'ok',
+        schema: JSON.stringify(data, null, 2),
+      }
+    } else {
+      const schema = buildClientSchema(data)
+      return {
+        status: 'ok',
+        schema: printSchema(schema),
+      }
+    }
+  } catch (err) {
+    return { status: 'err', message: err.message }
+  }
+}
+
+/**
+ *
+ * Prints schema to file.
+ *
+ * @param dist
+ * @param schema
+ */
+export function printToFile(
+  dist: string,
+  schema: string,
+): { status: 'ok'; path: string } | { status: 'err'; message: string } {
+  try {
+    const output = path.resolve(process.cwd(), dist)
+
+    if (!fs.existsSync(output)) {
+      mkdirp.sync(output)
+    }
+    fs.writeFileSync(output, schema)
+
+    return { status: 'ok', path: output }
+  } catch (err) {
+    return { status: 'err', message: err.message }
+  }
+}

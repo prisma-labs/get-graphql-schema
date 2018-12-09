@@ -1,35 +1,51 @@
 {
   "name": "get-graphql-schema",
-  "bin": "dist/index.js",
-  "files": [
-    "README.md",
-    "dist/"
-  ],
-  "version": "2.1.2",
+  "version": "0.0.0-semantic-release",
   "description": "Downloads the GraphQL Schema of an GraphQL endpoint URL",
-  "scripts": {
-    "build": "tsc",
-    "prepublish": "npm run build && chmod +x dist/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "author": "Johannes Schickling <johannes@graph.cool>",
+  "bin": {
+    "get-schema": "dist/index.js"
   },
+  "files": [
+    "dist"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/graphcool/get-graphql-schema.git"
   },
-  "author": "Johannes Schickling <johannes@graph.cool>",
-  "license": "MIT",
+  "scripts": {
+    "build": "tsc -d",
+    "prepublish": "npm run build",
+    "test": "NODE_ENV=test jest",
+    "release": "semantic-release"
+  },
   "dependencies": {
     "chalk": "^2.4.1",
     "graphql": "^14.0.2",
+    "meow": "^5.0.0",
     "minimist": "^1.2.0",
+    "mkdirp": "^0.5.1",
     "node-fetch": "^2.2.0"
   },
   "devDependencies": {
     "@types/chalk": "^2.2.0",
     "@types/graphql": "^14.0.3",
+    "@types/jest": "^23.3.10",
+    "@types/meow": "^5.0.0",
     "@types/minimist": "^1.2.0",
+    "@types/mkdirp": "^0.5.2",
     "@types/node": "^10.12.0",
     "@types/node-fetch": "^2.1.2",
+    "jest": "^23.6.0",
+    "jest-fetch-mock": "^2.0.1",
+    "prettier": "^1.15.3",
+    "semantic-release": "^15.12.4",
+    "ts-jest": "^23.10.5",
+    "ts-node": "^7.0.1",
     "typescript": "^3.1.3"
-  }
+  },
+  "release": {
+    "branch": "master"
+  },
+  "license": "MIT"
 }
