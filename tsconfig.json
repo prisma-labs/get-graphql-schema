@@ -6,14 +6,9 @@
     "target": "es5",
     "outDir": "dist",
     "moduleResolution": "node",
-    "lib": ["es2017", "esnext.asynciterable"]
+    "lib": ["es2017", "esnext.asynciterable"],
+    "skipLibCheck": true
   },
-  "exclude": [
-    "node_modules",
-    "dist"
-  ],
-  "include": [
-    "./src/**/*.ts",
-    "./tests/**/*.ts"
-  ]
+  "exclude": ["node_modules", "dist"],
+  "include": ["./src/**/*.ts", "./tests/**/*.ts"]
 }

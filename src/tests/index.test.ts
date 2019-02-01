@@ -2,9 +2,7 @@ import { getHeadersFromInput, printToFile, getRemoteSchema } from '..'
 
 import * as fetch from 'jest-fetch-mock'
 import * as fs from 'fs'
-import * as path from 'path'
 import * as mkdirp from 'mkdirp'
-import { introspectionQuery } from 'graphql'
 
 jest.setMock('node-fetch', fetch)
 
