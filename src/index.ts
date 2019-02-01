@@ -6,6 +6,7 @@ import mkdirp = require('mkdirp')
 import { introspectionQuery } from 'graphql/utilities/introspectionQuery'
 import { buildClientSchema } from 'graphql/utilities/buildClientSchema'
 import { printSchema } from 'graphql/utilities/schemaPrinter'
+import * as query from 'querystringify'
 
 /**
  *
@@ -18,13 +19,15 @@ export function getHeadersFromInput(
 ): { key: string; value: string }[] {
   switch (typeof cli.flags.header) {
     case 'string': {
-      const [key, value] = cli.flags.header.split('=')
-      return [{ key, value }]
+      const keys = query.parse(cli.flags.header)
+      const key = Object.keys(keys)[0]
+      return [{ key: key, value: keys[key] }]
     }
     case 'object': {
       return cli.flags.header.map(header => {
-        const [key, value] = header.split('=')
-        return { key, value }
+        const keys = query.parse(header)
+        const key = Object.keys(keys)[0]
+        return { key: key, value: keys[key] }
       })
     }
     default: {

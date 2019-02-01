@@ -35,11 +35,28 @@ describe('core function works as expected', () => {
       },
     } as any)
 
+    const complexHeader = getHeadersFromInput({
+      flags: {
+        header: 'token=123fadshfkj=$',
+      },
+    } as any)
+
+    const multipleComplexHeaders = getHeadersFromInput({
+      flags: {
+        header: ['token=123fadshfkj=$', 'token=123fadshfkj=$'],
+      },
+    } as any)
+
     expect(noheader).toEqual([])
     expect(singleHeader).toEqual([{ key: 'key', value: 'pass' }])
     expect(multipleHeaders).toEqual([
       { key: 'key', value: 'pass' },
       { key: 'key', value: 'pass' },
+    ])
+    expect(complexHeader).toEqual([{ key: 'token', value: '123fadshfkj=$' }])
+    expect(multipleComplexHeaders).toEqual([
+      { key: 'token', value: '123fadshfkj=$' },
+      { key: 'token', value: '123fadshfkj=$' },
     ])
   })
 
