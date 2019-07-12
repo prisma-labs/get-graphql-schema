@@ -100,7 +100,7 @@ export function printToFile(
     if (!fs.existsSync(output)) {
       mkdirp.sync(output)
     }
-    fs.writeFileSync(output, schema)
+    fs.writeFileSync(output, schema, 'utf8')
 
     return { status: 'ok', path: output }
   } catch (err) {
