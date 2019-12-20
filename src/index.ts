@@ -56,10 +56,18 @@ export async function getRemoteSchema(
   { status: 'ok'; schema: string } | { status: 'err'; message: string }
 > {
   try {
-    const { data, errors } = await fetch(endpoint, {
+    let url = endpoint;
+    let body: string | undefined = JSON.stringify({ query: introspectionQuery });
+
+    if (options.method === 'GET') {
+      endpoint = endpoint + `?query=${encodeURIComponent(introspectionQuery)}`;
+      body = undefined;
+    }
+
+    const { data, errors } = await fetch(url, {
       method: options.method,
       headers: options.headers,
-      body: JSON.stringify({ query: introspectionQuery }),
+      body
     }).then(res => res.json())
 
     if (errors) {
