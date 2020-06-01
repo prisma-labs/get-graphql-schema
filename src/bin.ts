@@ -13,6 +13,7 @@ Fetch and print the GraphQL schema from a GraphQL HTTP endpoint (Outputs schema 
 Options:
   --header, -h    Add a custom header (ex. 'X-API-KEY=ABC123'), can be used multiple times
   --json, -j      Output in JSON format (based on introspection query)
+  --sort, -s      Sort schema declarations
   --method        Use method (GET,POST, PUT, DELETE)
   --output       Save schema to file.
 `,
@@ -25,6 +26,11 @@ Options:
       json: {
         type: 'boolean',
         alias: 'j',
+        default: false,
+      },
+      sort: {
+        type: 'boolean',
+        alias: 's',
         default: false,
       },
       method: {
@@ -67,6 +73,7 @@ export async function main(cli: meow.Result): Promise<void> {
   const schema = await getRemoteSchema(endpoint, {
     method: cli.flags.method,
     headers,
+    sort: cli.flags.sort,
     json: cli.flags.json,
   })
 

@@ -5,6 +5,7 @@ import meow = require('meow')
 import mkdirp = require('mkdirp')
 import { introspectionQuery } from 'graphql/utilities/introspectionQuery'
 import { buildClientSchema } from 'graphql/utilities/buildClientSchema'
+import { lexicographicSortSchema } from 'graphql/utilities/lexicographicSortSchema'
 import { printSchema } from 'graphql/utilities/schemaPrinter'
 import * as query from 'querystringify'
 
@@ -39,6 +40,7 @@ export function getHeadersFromInput(
 interface Options {
   method?: 'GET' | 'POST' | 'PUT' | 'DELETE'
   headers?: { [key: string]: string }
+  sort?: boolean
   json?: boolean
 }
 
@@ -73,6 +75,12 @@ export async function getRemoteSchema(
       }
     } else {
       const schema = buildClientSchema(data)
+      if (options.sort) {
+        return {
+          status: 'ok',
+          schema: printSchema(lexicographicSortSchema(schema)),
+        }
+      }
       return {
         status: 'ok',
         schema: printSchema(schema),
