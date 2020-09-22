@@ -96,9 +96,9 @@ export function printToFile(
 ): { status: 'ok'; path: string } | { status: 'err'; message: string } {
   try {
     const output = path.resolve(process.cwd(), dist)
-
-    if (!fs.existsSync(output)) {
-      mkdirp.sync(output)
+    const dir = path.dirname(output)
+    if (!fs.existsSync(dir)) {
+      mkdirp.sync(dir)
     }
     fs.writeFileSync(output, schema)
 

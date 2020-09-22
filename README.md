@@ -14,7 +14,7 @@ npm install -g get-graphql-schema
 ## Usage
 
 ```sh
-  Usage: get-graphql-schema [OPTIONS] ENDPOINT_URL > schema.graphql
+  Usage: get-graphql-schema  "your GraphQL server http url" --output "your path/schema.graphql" -h "a=b(your http header of auth)"
 
   Fetch and print the GraphQL schema from a GraphQL HTTP endpoint
   (Outputs schema in IDL syntax by default)
@@ -23,7 +23,7 @@ npm install -g get-graphql-schema
     --header, -h    Add a custom header (ex. 'X-API-KEY=ABC123'), can be used multiple times
     --json, -j      Output in JSON format (based on introspection query)
     --version, -v   Print version of get-graphql-schema
-
+    --output        Save schema to file.
 ```
 
 ## Help & Community [![Slack Status](https://slack.graph.cool/badge.svg)](https://slack.graph.cool)

@@ -1,0 +1,3552 @@
+schema {
+  query: query_root
+  mutation: mutation_root
+  subscription: subscription_root
+}
+
+"""
+地址收藏
+
+
+columns and relationships of "address"
+
+"""
+type address {
+  """地址行政划分"""
+  address_components(
+    """JSON select path"""
+    path: String
+  ): jsonb
+
+  """详细地址"""
+  formatted_address: String
+
+  """经纬度"""
+  geometry: geography
+  id: uuid!
+
+  """地址标签"""
+  label: String
+
+  """外键,user.id"""
+  user: Int!
+}
+
+"""
+aggregated selection of "address"
+"""
+type address_aggregate {
+  aggregate: address_aggregate_fields
+  nodes: [address!]!
+}
+
+"""
+aggregate fields of "address"
+"""
+type address_aggregate_fields {
+  avg: address_avg_fields
+  count(columns: [address_select_column!], distinct: Boolean): Int
+  max: address_max_fields
+  min: address_min_fields
+  stddev: address_stddev_fields
+  stddev_pop: address_stddev_pop_fields
+  stddev_samp: address_stddev_samp_fields
+  sum: address_sum_fields
+  var_pop: address_var_pop_fields
+  var_samp: address_var_samp_fields
+  variance: address_variance_fields
+}
+
+"""
+order by aggregate values of table "address"
+"""
+input address_aggregate_order_by {
+  avg: address_avg_order_by
+  count: order_by
+  max: address_max_order_by
+  min: address_min_order_by
+  stddev: address_stddev_order_by
+  stddev_pop: address_stddev_pop_order_by
+  stddev_samp: address_stddev_samp_order_by
+  sum: address_sum_order_by
+  var_pop: address_var_pop_order_by
+  var_samp: address_var_samp_order_by
+  variance: address_variance_order_by
+}
+
+"""append existing jsonb value of filtered columns with new jsonb value"""
+input address_append_input {
+  address_components: jsonb
+}
+
+"""
+input type for inserting array relation for remote table "address"
+"""
+input address_arr_rel_insert_input {
+  data: [address_insert_input!]!
+  on_conflict: address_on_conflict
+}
+
+"""aggregate avg on columns"""
+type address_avg_fields {
+  user: Float
+}
+
+"""
+order by avg() on columns of table "address"
+"""
+input address_avg_order_by {
+  user: order_by
+}
+
+"""
+Boolean expression to filter rows from the table "address". All fields are combined with a logical 'AND'.
+"""
+input address_bool_exp {
+  _and: [address_bool_exp]
+  _not: address_bool_exp
+  _or: [address_bool_exp]
+  address_components: jsonb_comparison_exp
+  formatted_address: String_comparison_exp
+  geometry: geography_comparison_exp
+  id: uuid_comparison_exp
+  label: String_comparison_exp
+  user: Int_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "address"
+"""
+enum address_constraint {
+  """unique or primary key constraint"""
+  address_pkey
+}
+
+"""
+delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+"""
+input address_delete_at_path_input {
+  address_components: [String]
+}
+
+"""
+delete the array element with specified index (negative integers count from the
+end). throws an error if top level container is not an array
+"""
+input address_delete_elem_input {
+  address_components: Int
+}
+
+"""
+delete key/value pair or string element. key/value pairs are matched based on their key value
+"""
+input address_delete_key_input {
+  address_components: String
+}
+
+"""
+input type for incrementing integer column in table "address"
+"""
+input address_inc_input {
+  user: Int
+}
+
+"""
+input type for inserting data into table "address"
+"""
+input address_insert_input {
+  address_components: jsonb
+  formatted_address: String
+  geometry: geography
+  id: uuid
+  label: String
+  user: Int
+}
+
+"""aggregate max on columns"""
+type address_max_fields {
+  formatted_address: String
+  id: uuid
+  label: String
+  user: Int
+}
+
+"""
+order by max() on columns of table "address"
+"""
+input address_max_order_by {
+  formatted_address: order_by
+  id: order_by
+  label: order_by
+  user: order_by
+}
+
+"""aggregate min on columns"""
+type address_min_fields {
+  formatted_address: String
+  id: uuid
+  label: String
+  user: Int
+}
+
+"""
+order by min() on columns of table "address"
+"""
+input address_min_order_by {
+  formatted_address: order_by
+  id: order_by
+  label: order_by
+  user: order_by
+}
+
+"""
+response of any mutation on the table "address"
+"""
+type address_mutation_response {
+  """number of affected rows by the mutation"""
+  affected_rows: Int!
+
+  """data of the affected rows by the mutation"""
+  returning: [address!]!
+}
+
+"""
+input type for inserting object relation for remote table "address"
+"""
+input address_obj_rel_insert_input {
+  data: address_insert_input!
+  on_conflict: address_on_conflict
+}
+
+"""
+on conflict condition type for table "address"
+"""
+input address_on_conflict {
+  constraint: address_constraint!
+  update_columns: [address_update_column!]!
+  where: address_bool_exp
+}
+
+"""
+ordering options when selecting data from "address"
+"""
+input address_order_by {
+  address_components: order_by
+  formatted_address: order_by
+  geometry: order_by
+  id: order_by
+  label: order_by
+  user: order_by
+}
+
+"""
+primary key columns input for table: "address"
+"""
+input address_pk_columns_input {
+  id: uuid!
+}
+
+"""prepend existing jsonb value of filtered columns with new jsonb value"""
+input address_prepend_input {
+  address_components: jsonb
+}
+
+"""
+select columns of table "address"
+"""
+enum address_select_column {
+  """column name"""
+  address_components
+
+  """column name"""
+  formatted_address
+
+  """column name"""
+  geometry
+
+  """column name"""
+  id
+
+  """column name"""
+  label
+
+  """column name"""
+  user
+}
+
+"""
+input type for updating data in table "address"
+"""
+input address_set_input {
+  address_components: jsonb
+  formatted_address: String
+  geometry: geography
+  id: uuid
+  label: String
+  user: Int
+}
+
+"""aggregate stddev on columns"""
+type address_stddev_fields {
+  user: Float
+}
+
+"""
+order by stddev() on columns of table "address"
+"""
+input address_stddev_order_by {
+  user: order_by
+}
+
+"""aggregate stddev_pop on columns"""
+type address_stddev_pop_fields {
+  user: Float
+}
+
+"""
+order by stddev_pop() on columns of table "address"
+"""
+input address_stddev_pop_order_by {
+  user: order_by
+}
+
+"""aggregate stddev_samp on columns"""
+type address_stddev_samp_fields {
+  user: Float
+}
+
+"""
+order by stddev_samp() on columns of table "address"
+"""
+input address_stddev_samp_order_by {
+  user: order_by
+}
+
+"""aggregate sum on columns"""
+type address_sum_fields {
+  user: Int
+}
+
+"""
+order by sum() on columns of table "address"
+"""
+input address_sum_order_by {
+  user: order_by
+}
+
+"""
+update columns of table "address"
+"""
+enum address_update_column {
+  """column name"""
+  address_components
+
+  """column name"""
+  formatted_address
+
+  """column name"""
+  geometry
+
+  """column name"""
+  id
+
+  """column name"""
+  label
+
+  """column name"""
+  user
+}
+
+"""aggregate var_pop on columns"""
+type address_var_pop_fields {
+  user: Float
+}
+
+"""
+order by var_pop() on columns of table "address"
+"""
+input address_var_pop_order_by {
+  user: order_by
+}
+
+"""aggregate var_samp on columns"""
+type address_var_samp_fields {
+  user: Float
+}
+
+"""
+order by var_samp() on columns of table "address"
+"""
+input address_var_samp_order_by {
+  user: order_by
+}
+
+"""aggregate variance on columns"""
+type address_variance_fields {
+  user: Float
+}
+
+"""
+order by variance() on columns of table "address"
+"""
+input address_variance_order_by {
+  user: order_by
+}
+
+input autoSignIn {
+  id: Int!
+  message: String!
+  token: String!
+}
+
+type autoSignInOutput {
+  accessToken: String!
+  message: String!
+}
+
+"""
+expression to compare columns of type Boolean. All fields are combined with logical 'AND'.
+"""
+input Boolean_comparison_exp {
+  _eq: Boolean
+  _gt: Boolean
+  _gte: Boolean
+  _in: [Boolean!]
+  _is_null: Boolean
+  _lt: Boolean
+  _lte: Boolean
+  _neq: Boolean
+  _nin: [Boolean!]
+}
+
+scalar geography
+
+"""
+Expression to compare the result of casting a column of type geography. Multiple
+cast targets are combined with logical 'AND'.
+"""
+input geography_cast_exp {
+  geometry: geometry_comparison_exp
+}
+
+"""
+expression to compare columns of type geography. All fields are combined with logical 'AND'.
+"""
+input geography_comparison_exp {
+  _cast: geography_cast_exp
+  _eq: geography
+  _gt: geography
+  _gte: geography
+  _in: [geography!]
+  _is_null: Boolean
+  _lt: geography
+  _lte: geography
+  _neq: geography
+  _nin: [geography!]
+
+  """is the column within a distance from a geography value"""
+  _st_d_within: st_d_within_geography_input
+
+  """does the column spatially intersect the given geography value"""
+  _st_intersects: geography
+}
+
+scalar geometry
+
+"""
+Expression to compare the result of casting a column of type geometry. Multiple
+cast targets are combined with logical 'AND'.
+"""
+input geometry_cast_exp {
+  geography: geography_comparison_exp
+}
+
+"""
+expression to compare columns of type geometry. All fields are combined with logical 'AND'.
+"""
+input geometry_comparison_exp {
+  _cast: geometry_cast_exp
+  _eq: geometry
+  _gt: geometry
+  _gte: geometry
+  _in: [geometry!]
+  _is_null: Boolean
+  _lt: geometry
+  _lte: geometry
+  _neq: geometry
+  _nin: [geometry!]
+
+  """does the column contain the given geometry value"""
+  _st_contains: geometry
+
+  """does the column crosses the given geometry value"""
+  _st_crosses: geometry
+
+  """is the column within a distance from a geometry value"""
+  _st_d_within: st_d_within_input
+
+  """is the column equal to given geometry value. Directionality is ignored"""
+  _st_equals: geometry
+
+  """does the column spatially intersect the given geometry value"""
+  _st_intersects: geometry
+
+  """
+  does the column 'spatially overlap' (intersect but not completely contain) the given geometry value
+  """
+  _st_overlaps: geometry
+
+  """
+  does the column have atleast one point in common with the given geometry value
+  """
+  _st_touches: geometry
+
+  """is the column contained in the given geometry value"""
+  _st_within: geometry
+}
+
+"""
+columns and relationships of "heros"
+"""
+type heros {
+  created_at: timestamptz!
+  id: Int!
+  level: String!
+  status: String!
+  updated_at: timestamptz!
+
+  """An object relationship"""
+  user: user!
+  user_id: Int!
+}
+
+"""
+aggregated selection of "heros"
+"""
+type heros_aggregate {
+  aggregate: heros_aggregate_fields
+  nodes: [heros!]!
+}
+
+"""
+aggregate fields of "heros"
+"""
+type heros_aggregate_fields {
+  avg: heros_avg_fields
+  count(columns: [heros_select_column!], distinct: Boolean): Int
+  max: heros_max_fields
+  min: heros_min_fields
+  stddev: heros_stddev_fields
+  stddev_pop: heros_stddev_pop_fields
+  stddev_samp: heros_stddev_samp_fields
+  sum: heros_sum_fields
+  var_pop: heros_var_pop_fields
+  var_samp: heros_var_samp_fields
+  variance: heros_variance_fields
+}
+
+"""
+order by aggregate values of table "heros"
+"""
+input heros_aggregate_order_by {
+  avg: heros_avg_order_by
+  count: order_by
+  max: heros_max_order_by
+  min: heros_min_order_by
+  stddev: heros_stddev_order_by
+  stddev_pop: heros_stddev_pop_order_by
+  stddev_samp: heros_stddev_samp_order_by
+  sum: heros_sum_order_by
+  var_pop: heros_var_pop_order_by
+  var_samp: heros_var_samp_order_by
+  variance: heros_variance_order_by
+}
+
+"""
+input type for inserting array relation for remote table "heros"
+"""
+input heros_arr_rel_insert_input {
+  data: [heros_insert_input!]!
+  on_conflict: heros_on_conflict
+}
+
+"""aggregate avg on columns"""
+type heros_avg_fields {
+  id: Float
+  user_id: Float
+}
+
+"""
+order by avg() on columns of table "heros"
+"""
+input heros_avg_order_by {
+  id: order_by
+  user_id: order_by
+}
+
+"""
+Boolean expression to filter rows from the table "heros". All fields are combined with a logical 'AND'.
+"""
+input heros_bool_exp {
+  _and: [heros_bool_exp]
+  _not: heros_bool_exp
+  _or: [heros_bool_exp]
+  created_at: timestamptz_comparison_exp
+  id: Int_comparison_exp
+  level: String_comparison_exp
+  status: String_comparison_exp
+  updated_at: timestamptz_comparison_exp
+  user: user_bool_exp
+  user_id: Int_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "heros"
+"""
+enum heros_constraint {
+  """unique or primary key constraint"""
+  heros_pkey
+}
+
+"""
+input type for incrementing integer column in table "heros"
+"""
+input heros_inc_input {
+  id: Int
+  user_id: Int
+}
+
+"""
+input type for inserting data into table "heros"
+"""
+input heros_insert_input {
+  created_at: timestamptz
+  id: Int
+  level: String
+  status: String
+  updated_at: timestamptz
+  user: user_obj_rel_insert_input
+  user_id: Int
+}
+
+"""aggregate max on columns"""
+type heros_max_fields {
+  created_at: timestamptz
+  id: Int
+  level: String
+  status: String
+  updated_at: timestamptz
+  user_id: Int
+}
+
+"""
+order by max() on columns of table "heros"
+"""
+input heros_max_order_by {
+  created_at: order_by
+  id: order_by
+  level: order_by
+  status: order_by
+  updated_at: order_by
+  user_id: order_by
+}
+
+"""aggregate min on columns"""
+type heros_min_fields {
+  created_at: timestamptz
+  id: Int
+  level: String
+  status: String
+  updated_at: timestamptz
+  user_id: Int
+}
+
+"""
+order by min() on columns of table "heros"
+"""
+input heros_min_order_by {
+  created_at: order_by
+  id: order_by
+  level: order_by
+  status: order_by
+  updated_at: order_by
+  user_id: order_by
+}
+
+"""
+response of any mutation on the table "heros"
+"""
+type heros_mutation_response {
+  """number of affected rows by the mutation"""
+  affected_rows: Int!
+
+  """data of the affected rows by the mutation"""
+  returning: [heros!]!
+}
+
+"""
+input type for inserting object relation for remote table "heros"
+"""
+input heros_obj_rel_insert_input {
+  data: heros_insert_input!
+  on_conflict: heros_on_conflict
+}
+
+"""
+on conflict condition type for table "heros"
+"""
+input heros_on_conflict {
+  constraint: heros_constraint!
+  update_columns: [heros_update_column!]!
+  where: heros_bool_exp
+}
+
+"""
+ordering options when selecting data from "heros"
+"""
+input heros_order_by {
+  created_at: order_by
+  id: order_by
+  level: order_by
+  status: order_by
+  updated_at: order_by
+  user: user_order_by
+  user_id: order_by
+}
+
+"""
+primary key columns input for table: "heros"
+"""
+input heros_pk_columns_input {
+  id: Int!
+}
+
+"""
+select columns of table "heros"
+"""
+enum heros_select_column {
+  """column name"""
+  created_at
+
+  """column name"""
+  id
+
+  """column name"""
+  level
+
+  """column name"""
+  status
+
+  """column name"""
+  updated_at
+
+  """column name"""
+  user_id
+}
+
+"""
+input type for updating data in table "heros"
+"""
+input heros_set_input {
+  created_at: timestamptz
+  id: Int
+  level: String
+  status: String
+  updated_at: timestamptz
+  user_id: Int
+}
+
+"""aggregate stddev on columns"""
+type heros_stddev_fields {
+  id: Float
+  user_id: Float
+}
+
+"""
+order by stddev() on columns of table "heros"
+"""
+input heros_stddev_order_by {
+  id: order_by
+  user_id: order_by
+}
+
+"""aggregate stddev_pop on columns"""
+type heros_stddev_pop_fields {
+  id: Float
+  user_id: Float
+}
+
+"""
+order by stddev_pop() on columns of table "heros"
+"""
+input heros_stddev_pop_order_by {
+  id: order_by
+  user_id: order_by
+}
+
+"""aggregate stddev_samp on columns"""
+type heros_stddev_samp_fields {
+  id: Float
+  user_id: Float
+}
+
+"""
+order by stddev_samp() on columns of table "heros"
+"""
+input heros_stddev_samp_order_by {
+  id: order_by
+  user_id: order_by
+}
+
+"""aggregate sum on columns"""
+type heros_sum_fields {
+  id: Int
+  user_id: Int
+}
+
+"""
+order by sum() on columns of table "heros"
+"""
+input heros_sum_order_by {
+  id: order_by
+  user_id: order_by
+}
+
+"""
+update columns of table "heros"
+"""
+enum heros_update_column {
+  """column name"""
+  created_at
+
+  """column name"""
+  id
+
+  """column name"""
+  level
+
+  """column name"""
+  status
+
+  """column name"""
+  updated_at
+
+  """column name"""
+  user_id
+}
+
+"""aggregate var_pop on columns"""
+type heros_var_pop_fields {
+  id: Float
+  user_id: Float
+}
+
+"""
+order by var_pop() on columns of table "heros"
+"""
+input heros_var_pop_order_by {
+  id: order_by
+  user_id: order_by
+}
+
+"""aggregate var_samp on columns"""
+type heros_var_samp_fields {
+  id: Float
+  user_id: Float
+}
+
+"""
+order by var_samp() on columns of table "heros"
+"""
+input heros_var_samp_order_by {
+  id: order_by
+  user_id: order_by
+}
+
+"""aggregate variance on columns"""
+type heros_variance_fields {
+  id: Float
+  user_id: Float
+}
+
+"""
+order by variance() on columns of table "heros"
+"""
+input heros_variance_order_by {
+  id: order_by
+  user_id: order_by
+}
+
+"""
+expression to compare columns of type Int. All fields are combined with logical 'AND'.
+"""
+input Int_comparison_exp {
+  _eq: Int
+  _gt: Int
+  _gte: Int
+  _in: [Int!]
+  _is_null: Boolean
+  _lt: Int
+  _lte: Int
+  _neq: Int
+  _nin: [Int!]
+}
+
+scalar json
+
+"""
+expression to compare columns of type json. All fields are combined with logical 'AND'.
+"""
+input json_comparison_exp {
+  _eq: json
+  _gt: json
+  _gte: json
+  _in: [json!]
+  _is_null: Boolean
+  _lt: json
+  _lte: json
+  _neq: json
+  _nin: [json!]
+}
+
+scalar jsonb
+
+"""
+expression to compare columns of type jsonb. All fields are combined with logical 'AND'.
+"""
+input jsonb_comparison_exp {
+  """is the column contained in the given json value"""
+  _contained_in: jsonb
+
+  """does the column contain the given json value at the top level"""
+  _contains: jsonb
+  _eq: jsonb
+  _gt: jsonb
+  _gte: jsonb
+
+  """does the string exist as a top-level key in the column"""
+  _has_key: String
+
+  """do all of these strings exist as top-level keys in the column"""
+  _has_keys_all: [String!]
+
+  """do any of these strings exist as top-level keys in the column"""
+  _has_keys_any: [String!]
+  _in: [jsonb!]
+  _is_null: Boolean
+  _lt: jsonb
+  _lte: jsonb
+  _neq: jsonb
+  _nin: [jsonb!]
+}
+
+"""
+任务
+
+
+columns and relationships of "mission"
+
+"""
+type mission {
+  created_at: timestamptz!
+
+  """任务描述"""
+  description: String!
+
+  """utc时间戳"""
+  end_time: timestamp!
+
+  """完成任务预计所需时间,单位:分"""
+  estimated_duration: Int!
+  id: Int!
+
+  """任务位置"""
+  location(
+    """JSON select path"""
+    path: String
+  ): jsonb!
+
+  """任务名称"""
+  name: String!
+
+  """离线报销"""
+  offline_pay(
+    """JSON select path"""
+    path: String
+  ): jsonb
+
+  """在线报销"""
+  online_pay(
+    """JSON select path"""
+    path: String
+  ): jsonb
+  others: String
+
+  """参考照片,用@串连多个图片的url"""
+  photo_reference: String
+
+  """任务报酬"""
+  reward: money!
+
+  """utc时间戳"""
+  start_time: timestamp!
+  strength: String
+  tools: String
+  updated_at: timestamptz!
+
+  """外键,user.id ,创建任务的用户"""
+  user: Int!
+  vehicle: String
+}
+
+"""
+aggregated selection of "mission"
+"""
+type mission_aggregate {
+  aggregate: mission_aggregate_fields
+  nodes: [mission!]!
+}
+
+"""
+aggregate fields of "mission"
+"""
+type mission_aggregate_fields {
+  avg: mission_avg_fields
+  count(columns: [mission_select_column!], distinct: Boolean): Int
+  max: mission_max_fields
+  min: mission_min_fields
+  stddev: mission_stddev_fields
+  stddev_pop: mission_stddev_pop_fields
+  stddev_samp: mission_stddev_samp_fields
+  sum: mission_sum_fields
+  var_pop: mission_var_pop_fields
+  var_samp: mission_var_samp_fields
+  variance: mission_variance_fields
+}
+
+"""
+order by aggregate values of table "mission"
+"""
+input mission_aggregate_order_by {
+  avg: mission_avg_order_by
+  count: order_by
+  max: mission_max_order_by
+  min: mission_min_order_by
+  stddev: mission_stddev_order_by
+  stddev_pop: mission_stddev_pop_order_by
+  stddev_samp: mission_stddev_samp_order_by
+  sum: mission_sum_order_by
+  var_pop: mission_var_pop_order_by
+  var_samp: mission_var_samp_order_by
+  variance: mission_variance_order_by
+}
+
+"""append existing jsonb value of filtered columns with new jsonb value"""
+input mission_append_input {
+  location: jsonb
+  offline_pay: jsonb
+  online_pay: jsonb
+}
+
+"""
+input type for inserting array relation for remote table "mission"
+"""
+input mission_arr_rel_insert_input {
+  data: [mission_insert_input!]!
+  on_conflict: mission_on_conflict
+}
+
+"""aggregate avg on columns"""
+type mission_avg_fields {
+  estimated_duration: Float
+  id: Float
+  reward: Float
+  user: Float
+}
+
+"""
+order by avg() on columns of table "mission"
+"""
+input mission_avg_order_by {
+  estimated_duration: order_by
+  id: order_by
+  reward: order_by
+  user: order_by
+}
+
+"""
+Boolean expression to filter rows from the table "mission". All fields are combined with a logical 'AND'.
+"""
+input mission_bool_exp {
+  _and: [mission_bool_exp]
+  _not: mission_bool_exp
+  _or: [mission_bool_exp]
+  created_at: timestamptz_comparison_exp
+  description: String_comparison_exp
+  end_time: timestamp_comparison_exp
+  estimated_duration: Int_comparison_exp
+  id: Int_comparison_exp
+  location: jsonb_comparison_exp
+  name: String_comparison_exp
+  offline_pay: jsonb_comparison_exp
+  online_pay: jsonb_comparison_exp
+  others: String_comparison_exp
+  photo_reference: String_comparison_exp
+  reward: money_comparison_exp
+  start_time: timestamp_comparison_exp
+  strength: String_comparison_exp
+  tools: String_comparison_exp
+  updated_at: timestamptz_comparison_exp
+  user: Int_comparison_exp
+  vehicle: String_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "mission"
+"""
+enum mission_constraint {
+  """unique or primary key constraint"""
+  mission_id_key
+
+  """unique or primary key constraint"""
+  mission_pkey
+}
+
+"""
+delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+"""
+input mission_delete_at_path_input {
+  location: [String]
+  offline_pay: [String]
+  online_pay: [String]
+}
+
+"""
+delete the array element with specified index (negative integers count from the
+end). throws an error if top level container is not an array
+"""
+input mission_delete_elem_input {
+  location: Int
+  offline_pay: Int
+  online_pay: Int
+}
+
+"""
+delete key/value pair or string element. key/value pairs are matched based on their key value
+"""
+input mission_delete_key_input {
+  location: String
+  offline_pay: String
+  online_pay: String
+}
+
+"""
+input type for incrementing integer column in table "mission"
+"""
+input mission_inc_input {
+  estimated_duration: Int
+  id: Int
+  reward: money
+  user: Int
+}
+
+"""
+input type for inserting data into table "mission"
+"""
+input mission_insert_input {
+  created_at: timestamptz
+  description: String
+  end_time: timestamp
+  estimated_duration: Int
+  id: Int
+  location: jsonb
+  name: String
+  offline_pay: jsonb
+  online_pay: jsonb
+  others: String
+  photo_reference: String
+  reward: money
+  start_time: timestamp
+  strength: String
+  tools: String
+  updated_at: timestamptz
+  user: Int
+  vehicle: String
+}
+
+"""aggregate max on columns"""
+type mission_max_fields {
+  created_at: timestamptz
+  description: String
+  end_time: timestamp
+  estimated_duration: Int
+  id: Int
+  name: String
+  others: String
+  photo_reference: String
+  reward: money
+  start_time: timestamp
+  strength: String
+  tools: String
+  updated_at: timestamptz
+  user: Int
+  vehicle: String
+}
+
+"""
+order by max() on columns of table "mission"
+"""
+input mission_max_order_by {
+  created_at: order_by
+  description: order_by
+  end_time: order_by
+  estimated_duration: order_by
+  id: order_by
+  name: order_by
+  others: order_by
+  photo_reference: order_by
+  reward: order_by
+  start_time: order_by
+  strength: order_by
+  tools: order_by
+  updated_at: order_by
+  user: order_by
+  vehicle: order_by
+}
+
+"""aggregate min on columns"""
+type mission_min_fields {
+  created_at: timestamptz
+  description: String
+  end_time: timestamp
+  estimated_duration: Int
+  id: Int
+  name: String
+  others: String
+  photo_reference: String
+  reward: money
+  start_time: timestamp
+  strength: String
+  tools: String
+  updated_at: timestamptz
+  user: Int
+  vehicle: String
+}
+
+"""
+order by min() on columns of table "mission"
+"""
+input mission_min_order_by {
+  created_at: order_by
+  description: order_by
+  end_time: order_by
+  estimated_duration: order_by
+  id: order_by
+  name: order_by
+  others: order_by
+  photo_reference: order_by
+  reward: order_by
+  start_time: order_by
+  strength: order_by
+  tools: order_by
+  updated_at: order_by
+  user: order_by
+  vehicle: order_by
+}
+
+"""
+response of any mutation on the table "mission"
+"""
+type mission_mutation_response {
+  """number of affected rows by the mutation"""
+  affected_rows: Int!
+
+  """data of the affected rows by the mutation"""
+  returning: [mission!]!
+}
+
+"""
+input type for inserting object relation for remote table "mission"
+"""
+input mission_obj_rel_insert_input {
+  data: mission_insert_input!
+  on_conflict: mission_on_conflict
+}
+
+"""
+on conflict condition type for table "mission"
+"""
+input mission_on_conflict {
+  constraint: mission_constraint!
+  update_columns: [mission_update_column!]!
+  where: mission_bool_exp
+}
+
+"""
+ordering options when selecting data from "mission"
+"""
+input mission_order_by {
+  created_at: order_by
+  description: order_by
+  end_time: order_by
+  estimated_duration: order_by
+  id: order_by
+  location: order_by
+  name: order_by
+  offline_pay: order_by
+  online_pay: order_by
+  others: order_by
+  photo_reference: order_by
+  reward: order_by
+  start_time: order_by
+  strength: order_by
+  tools: order_by
+  updated_at: order_by
+  user: order_by
+  vehicle: order_by
+}
+
+"""
+primary key columns input for table: "mission"
+"""
+input mission_pk_columns_input {
+  id: Int!
+}
+
+"""prepend existing jsonb value of filtered columns with new jsonb value"""
+input mission_prepend_input {
+  location: jsonb
+  offline_pay: jsonb
+  online_pay: jsonb
+}
+
+"""
+select columns of table "mission"
+"""
+enum mission_select_column {
+  """column name"""
+  created_at
+
+  """column name"""
+  description
+
+  """column name"""
+  end_time
+
+  """column name"""
+  estimated_duration
+
+  """column name"""
+  id
+
+  """column name"""
+  location
+
+  """column name"""
+  name
+
+  """column name"""
+  offline_pay
+
+  """column name"""
+  online_pay
+
+  """column name"""
+  others
+
+  """column name"""
+  photo_reference
+
+  """column name"""
+  reward
+
+  """column name"""
+  start_time
+
+  """column name"""
+  strength
+
+  """column name"""
+  tools
+
+  """column name"""
+  updated_at
+
+  """column name"""
+  user
+
+  """column name"""
+  vehicle
+}
+
+"""
+input type for updating data in table "mission"
+"""
+input mission_set_input {
+  created_at: timestamptz
+  description: String
+  end_time: timestamp
+  estimated_duration: Int
+  id: Int
+  location: jsonb
+  name: String
+  offline_pay: jsonb
+  online_pay: jsonb
+  others: String
+  photo_reference: String
+  reward: money
+  start_time: timestamp
+  strength: String
+  tools: String
+  updated_at: timestamptz
+  user: Int
+  vehicle: String
+}
+
+"""aggregate stddev on columns"""
+type mission_stddev_fields {
+  estimated_duration: Float
+  id: Float
+  reward: Float
+  user: Float
+}
+
+"""
+order by stddev() on columns of table "mission"
+"""
+input mission_stddev_order_by {
+  estimated_duration: order_by
+  id: order_by
+  reward: order_by
+  user: order_by
+}
+
+"""aggregate stddev_pop on columns"""
+type mission_stddev_pop_fields {
+  estimated_duration: Float
+  id: Float
+  reward: Float
+  user: Float
+}
+
+"""
+order by stddev_pop() on columns of table "mission"
+"""
+input mission_stddev_pop_order_by {
+  estimated_duration: order_by
+  id: order_by
+  reward: order_by
+  user: order_by
+}
+
+"""aggregate stddev_samp on columns"""
+type mission_stddev_samp_fields {
+  estimated_duration: Float
+  id: Float
+  reward: Float
+  user: Float
+}
+
+"""
+order by stddev_samp() on columns of table "mission"
+"""
+input mission_stddev_samp_order_by {
+  estimated_duration: order_by
+  id: order_by
+  reward: order_by
+  user: order_by
+}
+
+"""aggregate sum on columns"""
+type mission_sum_fields {
+  estimated_duration: Int
+  id: Int
+  reward: money
+  user: Int
+}
+
+"""
+order by sum() on columns of table "mission"
+"""
+input mission_sum_order_by {
+  estimated_duration: order_by
+  id: order_by
+  reward: order_by
+  user: order_by
+}
+
+"""
+update columns of table "mission"
+"""
+enum mission_update_column {
+  """column name"""
+  created_at
+
+  """column name"""
+  description
+
+  """column name"""
+  end_time
+
+  """column name"""
+  estimated_duration
+
+  """column name"""
+  id
+
+  """column name"""
+  location
+
+  """column name"""
+  name
+
+  """column name"""
+  offline_pay
+
+  """column name"""
+  online_pay
+
+  """column name"""
+  others
+
+  """column name"""
+  photo_reference
+
+  """column name"""
+  reward
+
+  """column name"""
+  start_time
+
+  """column name"""
+  strength
+
+  """column name"""
+  tools
+
+  """column name"""
+  updated_at
+
+  """column name"""
+  user
+
+  """column name"""
+  vehicle
+}
+
+"""aggregate var_pop on columns"""
+type mission_var_pop_fields {
+  estimated_duration: Float
+  id: Float
+  reward: Float
+  user: Float
+}
+
+"""
+order by var_pop() on columns of table "mission"
+"""
+input mission_var_pop_order_by {
+  estimated_duration: order_by
+  id: order_by
+  reward: order_by
+  user: order_by
+}
+
+"""aggregate var_samp on columns"""
+type mission_var_samp_fields {
+  estimated_duration: Float
+  id: Float
+  reward: Float
+  user: Float
+}
+
+"""
+order by var_samp() on columns of table "mission"
+"""
+input mission_var_samp_order_by {
+  estimated_duration: order_by
+  id: order_by
+  reward: order_by
+  user: order_by
+}
+
+"""aggregate variance on columns"""
+type mission_variance_fields {
+  estimated_duration: Float
+  id: Float
+  reward: Float
+  user: Float
+}
+
+"""
+order by variance() on columns of table "mission"
+"""
+input mission_variance_order_by {
+  estimated_duration: order_by
+  id: order_by
+  reward: order_by
+  user: order_by
+}
+
+scalar money
+
+"""
+expression to compare columns of type money. All fields are combined with logical 'AND'.
+"""
+input money_comparison_exp {
+  _eq: money
+  _gt: money
+  _gte: money
+  _in: [money!]
+  _is_null: Boolean
+  _lt: money
+  _lte: money
+  _neq: money
+  _nin: [money!]
+}
+
+"""mutation root"""
+type mutation_root {
+  """
+  perform the action: "autoSignIn"
+  """
+  autoSignIn(signIn: signIn!): signInOutput
+
+  """
+  delete data from the table: "address"
+  """
+  delete_address(
+    """filter the rows which have to be deleted"""
+    where: address_bool_exp!
+  ): address_mutation_response
+
+  """
+  delete single row from the table: "address"
+  """
+  delete_address_by_pk(id: uuid!): address
+
+  """
+  delete data from the table: "heros"
+  """
+  delete_heros(
+    """filter the rows which have to be deleted"""
+    where: heros_bool_exp!
+  ): heros_mutation_response
+
+  """
+  delete single row from the table: "heros"
+  """
+  delete_heros_by_pk(id: Int!): heros
+
+  """
+  delete data from the table: "mission"
+  """
+  delete_mission(
+    """filter the rows which have to be deleted"""
+    where: mission_bool_exp!
+  ): mission_mutation_response
+
+  """
+  delete single row from the table: "mission"
+  """
+  delete_mission_by_pk(id: Int!): mission
+
+  """
+  delete data from the table: "user"
+  """
+  delete_user(
+    """filter the rows which have to be deleted"""
+    where: user_bool_exp!
+  ): user_mutation_response
+
+  """
+  delete single row from the table: "user"
+  """
+  delete_user_by_pk(
+    """自增的id"""
+    id: Int!
+  ): user
+
+  """
+  delete data from the table: "user_ping"
+  """
+  delete_user_ping(
+    """filter the rows which have to be deleted"""
+    where: user_ping_bool_exp!
+  ): user_ping_mutation_response
+
+  """
+  delete single row from the table: "user_ping"
+  """
+  delete_user_ping_by_pk(id: uuid!): user_ping
+
+  """
+  insert data into the table: "address"
+  """
+  insert_address(
+    """the rows to be inserted"""
+    objects: [address_insert_input!]!
+
+    """on conflict condition"""
+    on_conflict: address_on_conflict
+  ): address_mutation_response
+
+  """
+  insert a single row into the table: "address"
+  """
+  insert_address_one(
+    """the row to be inserted"""
+    object: address_insert_input!
+
+    """on conflict condition"""
+    on_conflict: address_on_conflict
+  ): address
+
+  """
+  insert data into the table: "heros"
+  """
+  insert_heros(
+    """the rows to be inserted"""
+    objects: [heros_insert_input!]!
+
+    """on conflict condition"""
+    on_conflict: heros_on_conflict
+  ): heros_mutation_response
+
+  """
+  insert a single row into the table: "heros"
+  """
+  insert_heros_one(
+    """the row to be inserted"""
+    object: heros_insert_input!
+
+    """on conflict condition"""
+    on_conflict: heros_on_conflict
+  ): heros
+
+  """
+  insert data into the table: "mission"
+  """
+  insert_mission(
+    """the rows to be inserted"""
+    objects: [mission_insert_input!]!
+
+    """on conflict condition"""
+    on_conflict: mission_on_conflict
+  ): mission_mutation_response
+
+  """
+  insert a single row into the table: "mission"
+  """
+  insert_mission_one(
+    """the row to be inserted"""
+    object: mission_insert_input!
+
+    """on conflict condition"""
+    on_conflict: mission_on_conflict
+  ): mission
+
+  """
+  insert data into the table: "user"
+  """
+  insert_user(
+    """the rows to be inserted"""
+    objects: [user_insert_input!]!
+
+    """on conflict condition"""
+    on_conflict: user_on_conflict
+  ): user_mutation_response
+
+  """
+  insert a single row into the table: "user"
+  """
+  insert_user_one(
+    """the row to be inserted"""
+    object: user_insert_input!
+
+    """on conflict condition"""
+    on_conflict: user_on_conflict
+  ): user
+
+  """
+  insert data into the table: "user_ping"
+  """
+  insert_user_ping(
+    """the rows to be inserted"""
+    objects: [user_ping_insert_input!]!
+
+    """on conflict condition"""
+    on_conflict: user_ping_on_conflict
+  ): user_ping_mutation_response
+
+  """
+  insert a single row into the table: "user_ping"
+  """
+  insert_user_ping_one(
+    """the row to be inserted"""
+    object: user_ping_insert_input!
+
+    """on conflict condition"""
+    on_conflict: user_ping_on_conflict
+  ): user_ping
+
+  """
+  perform the action: "signIn"
+  """
+  signIn(signIn: signInInput!): signInOutput
+
+  """
+  perform the action: "signUp"
+  """
+  signUp(user: userInput!): userOutput
+
+  """
+  update data of the table: "address"
+  """
+  update_address(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: address_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: address_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from
+    the end). throws an error if top level container is not an array
+    """
+    _delete_elem: address_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: address_delete_key_input
+
+    """increments the integer columns with given value of the filtered values"""
+    _inc: address_inc_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: address_prepend_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: address_set_input
+
+    """filter the rows which have to be updated"""
+    where: address_bool_exp!
+  ): address_mutation_response
+
+  """
+  update single row of the table: "address"
+  """
+  update_address_by_pk(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: address_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: address_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from
+    the end). throws an error if top level container is not an array
+    """
+    _delete_elem: address_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: address_delete_key_input
+
+    """increments the integer columns with given value of the filtered values"""
+    _inc: address_inc_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: address_prepend_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: address_set_input
+    pk_columns: address_pk_columns_input!
+  ): address
+
+  """
+  update data of the table: "heros"
+  """
+  update_heros(
+    """increments the integer columns with given value of the filtered values"""
+    _inc: heros_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: heros_set_input
+
+    """filter the rows which have to be updated"""
+    where: heros_bool_exp!
+  ): heros_mutation_response
+
+  """
+  update single row of the table: "heros"
+  """
+  update_heros_by_pk(
+    """increments the integer columns with given value of the filtered values"""
+    _inc: heros_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: heros_set_input
+    pk_columns: heros_pk_columns_input!
+  ): heros
+
+  """
+  update data of the table: "mission"
+  """
+  update_mission(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: mission_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: mission_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from
+    the end). throws an error if top level container is not an array
+    """
+    _delete_elem: mission_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: mission_delete_key_input
+
+    """increments the integer columns with given value of the filtered values"""
+    _inc: mission_inc_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: mission_prepend_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: mission_set_input
+
+    """filter the rows which have to be updated"""
+    where: mission_bool_exp!
+  ): mission_mutation_response
+
+  """
+  update single row of the table: "mission"
+  """
+  update_mission_by_pk(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: mission_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: mission_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from
+    the end). throws an error if top level container is not an array
+    """
+    _delete_elem: mission_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: mission_delete_key_input
+
+    """increments the integer columns with given value of the filtered values"""
+    _inc: mission_inc_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: mission_prepend_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: mission_set_input
+    pk_columns: mission_pk_columns_input!
+  ): mission
+
+  """
+  update data of the table: "user"
+  """
+  update_user(
+    """increments the integer columns with given value of the filtered values"""
+    _inc: user_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: user_set_input
+
+    """filter the rows which have to be updated"""
+    where: user_bool_exp!
+  ): user_mutation_response
+
+  """
+  update single row of the table: "user"
+  """
+  update_user_by_pk(
+    """increments the integer columns with given value of the filtered values"""
+    _inc: user_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: user_set_input
+    pk_columns: user_pk_columns_input!
+  ): user
+
+  """
+  update data of the table: "user_ping"
+  """
+  update_user_ping(
+    """increments the integer columns with given value of the filtered values"""
+    _inc: user_ping_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: user_ping_set_input
+
+    """filter the rows which have to be updated"""
+    where: user_ping_bool_exp!
+  ): user_ping_mutation_response
+
+  """
+  update single row of the table: "user_ping"
+  """
+  update_user_ping_by_pk(
+    """increments the integer columns with given value of the filtered values"""
+    _inc: user_ping_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: user_ping_set_input
+    pk_columns: user_ping_pk_columns_input!
+  ): user_ping
+}
+
+"""column ordering options"""
+enum order_by {
+  """in the ascending order, nulls last"""
+  asc
+
+  """in the ascending order, nulls first"""
+  asc_nulls_first
+
+  """in the ascending order, nulls last"""
+  asc_nulls_last
+
+  """in the descending order, nulls first"""
+  desc
+
+  """in the descending order, nulls first"""
+  desc_nulls_first
+
+  """in the descending order, nulls last"""
+  desc_nulls_last
+}
+
+"""query root"""
+type query_root {
+  """
+  fetch data from the table: "address"
+  """
+  address(
+    """distinct select on columns"""
+    distinct_on: [address_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [address_order_by!]
+
+    """filter the rows returned"""
+    where: address_bool_exp
+  ): [address!]!
+
+  """
+  fetch aggregated fields from the table: "address"
+  """
+  address_aggregate(
+    """distinct select on columns"""
+    distinct_on: [address_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [address_order_by!]
+
+    """filter the rows returned"""
+    where: address_bool_exp
+  ): address_aggregate!
+
+  """fetch data from the table: "address" using primary key columns"""
+  address_by_pk(id: uuid!): address
+
+  """
+  fetch data from the table: "heros"
+  """
+  heros(
+    """distinct select on columns"""
+    distinct_on: [heros_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [heros_order_by!]
+
+    """filter the rows returned"""
+    where: heros_bool_exp
+  ): [heros!]!
+
+  """
+  fetch aggregated fields from the table: "heros"
+  """
+  heros_aggregate(
+    """distinct select on columns"""
+    distinct_on: [heros_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [heros_order_by!]
+
+    """filter the rows returned"""
+    where: heros_bool_exp
+  ): heros_aggregate!
+
+  """fetch data from the table: "heros" using primary key columns"""
+  heros_by_pk(id: Int!): heros
+
+  """
+  fetch data from the table: "mission"
+  """
+  mission(
+    """distinct select on columns"""
+    distinct_on: [mission_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [mission_order_by!]
+
+    """filter the rows returned"""
+    where: mission_bool_exp
+  ): [mission!]!
+
+  """
+  fetch aggregated fields from the table: "mission"
+  """
+  mission_aggregate(
+    """distinct select on columns"""
+    distinct_on: [mission_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [mission_order_by!]
+
+    """filter the rows returned"""
+    where: mission_bool_exp
+  ): mission_aggregate!
+
+  """fetch data from the table: "mission" using primary key columns"""
+  mission_by_pk(id: Int!): mission
+
+  """
+  fetch data from the table: "user"
+  """
+  user(
+    """distinct select on columns"""
+    distinct_on: [user_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [user_order_by!]
+
+    """filter the rows returned"""
+    where: user_bool_exp
+  ): [user!]!
+
+  """
+  fetch aggregated fields from the table: "user"
+  """
+  user_aggregate(
+    """distinct select on columns"""
+    distinct_on: [user_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [user_order_by!]
+
+    """filter the rows returned"""
+    where: user_bool_exp
+  ): user_aggregate!
+
+  """fetch data from the table: "user" using primary key columns"""
+  user_by_pk(
+    """自增的id"""
+    id: Int!
+  ): user
+
+  """
+  fetch data from the table: "user_ping"
+  """
+  user_ping(
+    """distinct select on columns"""
+    distinct_on: [user_ping_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [user_ping_order_by!]
+
+    """filter the rows returned"""
+    where: user_ping_bool_exp
+  ): [user_ping!]!
+
+  """
+  fetch aggregated fields from the table: "user_ping"
+  """
+  user_ping_aggregate(
+    """distinct select on columns"""
+    distinct_on: [user_ping_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [user_ping_order_by!]
+
+    """filter the rows returned"""
+    where: user_ping_bool_exp
+  ): user_ping_aggregate!
+
+  """fetch data from the table: "user_ping" using primary key columns"""
+  user_ping_by_pk(id: uuid!): user_ping
+}
+
+input signIn {
+  accessToken: String!
+}
+
+input signInInput {
+  email: String!
+  password: String!
+}
+
+type signInOutput {
+  id: Int!
+  message: String!
+}
+
+input st_d_within_geography_input {
+  distance: Float!
+  from: geography!
+  use_spheroid: Boolean = true
+}
+
+input st_d_within_input {
+  distance: Float!
+  from: geometry!
+}
+
+"""
+expression to compare columns of type String. All fields are combined with logical 'AND'.
+"""
+input String_comparison_exp {
+  _eq: String
+  _gt: String
+  _gte: String
+  _ilike: String
+  _in: [String!]
+  _is_null: Boolean
+  _like: String
+  _lt: String
+  _lte: String
+  _neq: String
+  _nilike: String
+  _nin: [String!]
+  _nlike: String
+  _nsimilar: String
+  _similar: String
+}
+
+"""subscription root"""
+type subscription_root {
+  """
+  fetch data from the table: "address"
+  """
+  address(
+    """distinct select on columns"""
+    distinct_on: [address_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [address_order_by!]
+
+    """filter the rows returned"""
+    where: address_bool_exp
+  ): [address!]!
+
+  """
+  fetch aggregated fields from the table: "address"
+  """
+  address_aggregate(
+    """distinct select on columns"""
+    distinct_on: [address_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [address_order_by!]
+
+    """filter the rows returned"""
+    where: address_bool_exp
+  ): address_aggregate!
+
+  """fetch data from the table: "address" using primary key columns"""
+  address_by_pk(id: uuid!): address
+
+  """
+  fetch data from the table: "heros"
+  """
+  heros(
+    """distinct select on columns"""
+    distinct_on: [heros_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [heros_order_by!]
+
+    """filter the rows returned"""
+    where: heros_bool_exp
+  ): [heros!]!
+
+  """
+  fetch aggregated fields from the table: "heros"
+  """
+  heros_aggregate(
+    """distinct select on columns"""
+    distinct_on: [heros_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [heros_order_by!]
+
+    """filter the rows returned"""
+    where: heros_bool_exp
+  ): heros_aggregate!
+
+  """fetch data from the table: "heros" using primary key columns"""
+  heros_by_pk(id: Int!): heros
+
+  """
+  fetch data from the table: "mission"
+  """
+  mission(
+    """distinct select on columns"""
+    distinct_on: [mission_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [mission_order_by!]
+
+    """filter the rows returned"""
+    where: mission_bool_exp
+  ): [mission!]!
+
+  """
+  fetch aggregated fields from the table: "mission"
+  """
+  mission_aggregate(
+    """distinct select on columns"""
+    distinct_on: [mission_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [mission_order_by!]
+
+    """filter the rows returned"""
+    where: mission_bool_exp
+  ): mission_aggregate!
+
+  """fetch data from the table: "mission" using primary key columns"""
+  mission_by_pk(id: Int!): mission
+
+  """
+  fetch data from the table: "user"
+  """
+  user(
+    """distinct select on columns"""
+    distinct_on: [user_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [user_order_by!]
+
+    """filter the rows returned"""
+    where: user_bool_exp
+  ): [user!]!
+
+  """
+  fetch aggregated fields from the table: "user"
+  """
+  user_aggregate(
+    """distinct select on columns"""
+    distinct_on: [user_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [user_order_by!]
+
+    """filter the rows returned"""
+    where: user_bool_exp
+  ): user_aggregate!
+
+  """fetch data from the table: "user" using primary key columns"""
+  user_by_pk(
+    """自增的id"""
+    id: Int!
+  ): user
+
+  """
+  fetch data from the table: "user_ping"
+  """
+  user_ping(
+    """distinct select on columns"""
+    distinct_on: [user_ping_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [user_ping_order_by!]
+
+    """filter the rows returned"""
+    where: user_ping_bool_exp
+  ): [user_ping!]!
+
+  """
+  fetch aggregated fields from the table: "user_ping"
+  """
+  user_ping_aggregate(
+    """distinct select on columns"""
+    distinct_on: [user_ping_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [user_ping_order_by!]
+
+    """filter the rows returned"""
+    where: user_ping_bool_exp
+  ): user_ping_aggregate!
+
+  """fetch data from the table: "user_ping" using primary key columns"""
+  user_ping_by_pk(id: uuid!): user_ping
+}
+
+scalar timestamp
+
+"""
+expression to compare columns of type timestamp. All fields are combined with logical 'AND'.
+"""
+input timestamp_comparison_exp {
+  _eq: timestamp
+  _gt: timestamp
+  _gte: timestamp
+  _in: [timestamp!]
+  _is_null: Boolean
+  _lt: timestamp
+  _lte: timestamp
+  _neq: timestamp
+  _nin: [timestamp!]
+}
+
+scalar timestamptz
+
+"""
+expression to compare columns of type timestamptz. All fields are combined with logical 'AND'.
+"""
+input timestamptz_comparison_exp {
+  _eq: timestamptz
+  _gt: timestamptz
+  _gte: timestamptz
+  _in: [timestamptz!]
+  _is_null: Boolean
+  _lt: timestamptz
+  _lte: timestamptz
+  _neq: timestamptz
+  _nin: [timestamptz!]
+}
+
+"""
+用户
+
+
+columns and relationships of "user"
+
+"""
+type user {
+  avatar: String
+
+  """公民经验"""
+  citizen_xp: Int
+  country_code: String
+  created_at: timestamptz!
+  email: String
+
+  """加密后的密码"""
+  encrypted_password: String
+  first_name: String
+
+  """是否开通了英雄权限"""
+  hero_authority: Boolean
+
+  """An array relationship"""
+  heros(
+    """distinct select on columns"""
+    distinct_on: [heros_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [heros_order_by!]
+
+    """filter the rows returned"""
+    where: heros_bool_exp
+  ): [heros!]!
+
+  """An aggregated array relationship"""
+  heros_aggregate(
+    """distinct select on columns"""
+    distinct_on: [heros_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [heros_order_by!]
+
+    """filter the rows returned"""
+    where: heros_bool_exp
+  ): heros_aggregate!
+
+  """自增的id"""
+  id: Int!
+
+  """
+  A computed field, executes function "user_isonline"
+  """
+  is_online: Boolean
+  last_good_deed: String
+  last_name: String
+  one_word_blurb: String
+  phone: String
+  position: geometry
+  profile_name: String
+
+  """云代码生成的特殊id"""
+  unique_id: String
+  updated_at: timestamptz!
+
+  """An array relationship"""
+  userPings(
+    """distinct select on columns"""
+    distinct_on: [user_ping_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [user_ping_order_by!]
+
+    """filter the rows returned"""
+    where: user_ping_bool_exp
+  ): [user_ping!]!
+
+  """An aggregated array relationship"""
+  userPings_aggregate(
+    """distinct select on columns"""
+    distinct_on: [user_ping_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [user_ping_order_by!]
+
+    """filter the rows returned"""
+    where: user_ping_bool_exp
+  ): user_ping_aggregate!
+}
+
+"""
+aggregated selection of "user"
+"""
+type user_aggregate {
+  aggregate: user_aggregate_fields
+  nodes: [user!]!
+}
+
+"""
+aggregate fields of "user"
+"""
+type user_aggregate_fields {
+  avg: user_avg_fields
+  count(columns: [user_select_column!], distinct: Boolean): Int
+  max: user_max_fields
+  min: user_min_fields
+  stddev: user_stddev_fields
+  stddev_pop: user_stddev_pop_fields
+  stddev_samp: user_stddev_samp_fields
+  sum: user_sum_fields
+  var_pop: user_var_pop_fields
+  var_samp: user_var_samp_fields
+  variance: user_variance_fields
+}
+
+"""
+order by aggregate values of table "user"
+"""
+input user_aggregate_order_by {
+  avg: user_avg_order_by
+  count: order_by
+  max: user_max_order_by
+  min: user_min_order_by
+  stddev: user_stddev_order_by
+  stddev_pop: user_stddev_pop_order_by
+  stddev_samp: user_stddev_samp_order_by
+  sum: user_sum_order_by
+  var_pop: user_var_pop_order_by
+  var_samp: user_var_samp_order_by
+  variance: user_variance_order_by
+}
+
+"""
+input type for inserting array relation for remote table "user"
+"""
+input user_arr_rel_insert_input {
+  data: [user_insert_input!]!
+  on_conflict: user_on_conflict
+}
+
+"""aggregate avg on columns"""
+type user_avg_fields {
+  citizen_xp: Float
+  id: Float
+}
+
+"""
+order by avg() on columns of table "user"
+"""
+input user_avg_order_by {
+  citizen_xp: order_by
+  id: order_by
+}
+
+"""
+Boolean expression to filter rows from the table "user". All fields are combined with a logical 'AND'.
+"""
+input user_bool_exp {
+  _and: [user_bool_exp]
+  _not: user_bool_exp
+  _or: [user_bool_exp]
+  avatar: String_comparison_exp
+  citizen_xp: Int_comparison_exp
+  country_code: String_comparison_exp
+  created_at: timestamptz_comparison_exp
+  email: String_comparison_exp
+  encrypted_password: String_comparison_exp
+  first_name: String_comparison_exp
+  hero_authority: Boolean_comparison_exp
+  heros: heros_bool_exp
+  id: Int_comparison_exp
+  last_good_deed: String_comparison_exp
+  last_name: String_comparison_exp
+  one_word_blurb: String_comparison_exp
+  phone: String_comparison_exp
+  position: geometry_comparison_exp
+  profile_name: String_comparison_exp
+  unique_id: String_comparison_exp
+  updated_at: timestamptz_comparison_exp
+  userPings: user_ping_bool_exp
+}
+
+"""
+unique or primary key constraints on table "user"
+"""
+enum user_constraint {
+  """unique or primary key constraint"""
+  user_email_key
+
+  """unique or primary key constraint"""
+  user_pkey
+
+  """unique or primary key constraint"""
+  user_unique_id_key
+}
+
+"""
+input type for incrementing integer column in table "user"
+"""
+input user_inc_input {
+  citizen_xp: Int
+  id: Int
+}
+
+"""
+input type for inserting data into table "user"
+"""
+input user_insert_input {
+  avatar: String
+  citizen_xp: Int
+  country_code: String
+  created_at: timestamptz
+  email: String
+  encrypted_password: String
+  first_name: String
+  hero_authority: Boolean
+  heros: heros_arr_rel_insert_input
+  id: Int
+  last_good_deed: String
+  last_name: String
+  one_word_blurb: String
+  phone: String
+  position: geometry
+  profile_name: String
+  unique_id: String
+  updated_at: timestamptz
+  userPings: user_ping_arr_rel_insert_input
+}
+
+"""aggregate max on columns"""
+type user_max_fields {
+  avatar: String
+  citizen_xp: Int
+  country_code: String
+  created_at: timestamptz
+  email: String
+  encrypted_password: String
+  first_name: String
+  id: Int
+  last_good_deed: String
+  last_name: String
+  one_word_blurb: String
+  phone: String
+  profile_name: String
+  unique_id: String
+  updated_at: timestamptz
+}
+
+"""
+order by max() on columns of table "user"
+"""
+input user_max_order_by {
+  avatar: order_by
+  citizen_xp: order_by
+  country_code: order_by
+  created_at: order_by
+  email: order_by
+  encrypted_password: order_by
+  first_name: order_by
+  id: order_by
+  last_good_deed: order_by
+  last_name: order_by
+  one_word_blurb: order_by
+  phone: order_by
+  profile_name: order_by
+  unique_id: order_by
+  updated_at: order_by
+}
+
+"""aggregate min on columns"""
+type user_min_fields {
+  avatar: String
+  citizen_xp: Int
+  country_code: String
+  created_at: timestamptz
+  email: String
+  encrypted_password: String
+  first_name: String
+  id: Int
+  last_good_deed: String
+  last_name: String
+  one_word_blurb: String
+  phone: String
+  profile_name: String
+  unique_id: String
+  updated_at: timestamptz
+}
+
+"""
+order by min() on columns of table "user"
+"""
+input user_min_order_by {
+  avatar: order_by
+  citizen_xp: order_by
+  country_code: order_by
+  created_at: order_by
+  email: order_by
+  encrypted_password: order_by
+  first_name: order_by
+  id: order_by
+  last_good_deed: order_by
+  last_name: order_by
+  one_word_blurb: order_by
+  phone: order_by
+  profile_name: order_by
+  unique_id: order_by
+  updated_at: order_by
+}
+
+"""
+response of any mutation on the table "user"
+"""
+type user_mutation_response {
+  """number of affected rows by the mutation"""
+  affected_rows: Int!
+
+  """data of the affected rows by the mutation"""
+  returning: [user!]!
+}
+
+"""
+input type for inserting object relation for remote table "user"
+"""
+input user_obj_rel_insert_input {
+  data: user_insert_input!
+  on_conflict: user_on_conflict
+}
+
+"""
+on conflict condition type for table "user"
+"""
+input user_on_conflict {
+  constraint: user_constraint!
+  update_columns: [user_update_column!]!
+  where: user_bool_exp
+}
+
+"""
+ordering options when selecting data from "user"
+"""
+input user_order_by {
+  avatar: order_by
+  citizen_xp: order_by
+  country_code: order_by
+  created_at: order_by
+  email: order_by
+  encrypted_password: order_by
+  first_name: order_by
+  hero_authority: order_by
+  heros_aggregate: heros_aggregate_order_by
+  id: order_by
+  last_good_deed: order_by
+  last_name: order_by
+  one_word_blurb: order_by
+  phone: order_by
+  position: order_by
+  profile_name: order_by
+  unique_id: order_by
+  updated_at: order_by
+  userPings_aggregate: user_ping_aggregate_order_by
+}
+
+"""
+columns and relationships of "user_ping"
+"""
+type user_ping {
+  created_at: timestamptz!
+  id: uuid!
+  updated_at: timestamptz!
+
+  """An object relationship"""
+  user: user!
+  user_id: Int!
+}
+
+"""
+aggregated selection of "user_ping"
+"""
+type user_ping_aggregate {
+  aggregate: user_ping_aggregate_fields
+  nodes: [user_ping!]!
+}
+
+"""
+aggregate fields of "user_ping"
+"""
+type user_ping_aggregate_fields {
+  avg: user_ping_avg_fields
+  count(columns: [user_ping_select_column!], distinct: Boolean): Int
+  max: user_ping_max_fields
+  min: user_ping_min_fields
+  stddev: user_ping_stddev_fields
+  stddev_pop: user_ping_stddev_pop_fields
+  stddev_samp: user_ping_stddev_samp_fields
+  sum: user_ping_sum_fields
+  var_pop: user_ping_var_pop_fields
+  var_samp: user_ping_var_samp_fields
+  variance: user_ping_variance_fields
+}
+
+"""
+order by aggregate values of table "user_ping"
+"""
+input user_ping_aggregate_order_by {
+  avg: user_ping_avg_order_by
+  count: order_by
+  max: user_ping_max_order_by
+  min: user_ping_min_order_by
+  stddev: user_ping_stddev_order_by
+  stddev_pop: user_ping_stddev_pop_order_by
+  stddev_samp: user_ping_stddev_samp_order_by
+  sum: user_ping_sum_order_by
+  var_pop: user_ping_var_pop_order_by
+  var_samp: user_ping_var_samp_order_by
+  variance: user_ping_variance_order_by
+}
+
+"""
+input type for inserting array relation for remote table "user_ping"
+"""
+input user_ping_arr_rel_insert_input {
+  data: [user_ping_insert_input!]!
+  on_conflict: user_ping_on_conflict
+}
+
+"""aggregate avg on columns"""
+type user_ping_avg_fields {
+  user_id: Float
+}
+
+"""
+order by avg() on columns of table "user_ping"
+"""
+input user_ping_avg_order_by {
+  user_id: order_by
+}
+
+"""
+Boolean expression to filter rows from the table "user_ping". All fields are combined with a logical 'AND'.
+"""
+input user_ping_bool_exp {
+  _and: [user_ping_bool_exp]
+  _not: user_ping_bool_exp
+  _or: [user_ping_bool_exp]
+  created_at: timestamptz_comparison_exp
+  id: uuid_comparison_exp
+  updated_at: timestamptz_comparison_exp
+  user: user_bool_exp
+  user_id: Int_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "user_ping"
+"""
+enum user_ping_constraint {
+  """unique or primary key constraint"""
+  userPing_pkey
+}
+
+"""
+input type for incrementing integer column in table "user_ping"
+"""
+input user_ping_inc_input {
+  user_id: Int
+}
+
+"""
+input type for inserting data into table "user_ping"
+"""
+input user_ping_insert_input {
+  created_at: timestamptz
+  id: uuid
+  updated_at: timestamptz
+  user: user_obj_rel_insert_input
+  user_id: Int
+}
+
+"""aggregate max on columns"""
+type user_ping_max_fields {
+  created_at: timestamptz
+  id: uuid
+  updated_at: timestamptz
+  user_id: Int
+}
+
+"""
+order by max() on columns of table "user_ping"
+"""
+input user_ping_max_order_by {
+  created_at: order_by
+  id: order_by
+  updated_at: order_by
+  user_id: order_by
+}
+
+"""aggregate min on columns"""
+type user_ping_min_fields {
+  created_at: timestamptz
+  id: uuid
+  updated_at: timestamptz
+  user_id: Int
+}
+
+"""
+order by min() on columns of table "user_ping"
+"""
+input user_ping_min_order_by {
+  created_at: order_by
+  id: order_by
+  updated_at: order_by
+  user_id: order_by
+}
+
+"""
+response of any mutation on the table "user_ping"
+"""
+type user_ping_mutation_response {
+  """number of affected rows by the mutation"""
+  affected_rows: Int!
+
+  """data of the affected rows by the mutation"""
+  returning: [user_ping!]!
+}
+
+"""
+input type for inserting object relation for remote table "user_ping"
+"""
+input user_ping_obj_rel_insert_input {
+  data: user_ping_insert_input!
+  on_conflict: user_ping_on_conflict
+}
+
+"""
+on conflict condition type for table "user_ping"
+"""
+input user_ping_on_conflict {
+  constraint: user_ping_constraint!
+  update_columns: [user_ping_update_column!]!
+  where: user_ping_bool_exp
+}
+
+"""
+ordering options when selecting data from "user_ping"
+"""
+input user_ping_order_by {
+  created_at: order_by
+  id: order_by
+  updated_at: order_by
+  user: user_order_by
+  user_id: order_by
+}
+
+"""
+primary key columns input for table: "user_ping"
+"""
+input user_ping_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "user_ping"
+"""
+enum user_ping_select_column {
+  """column name"""
+  created_at
+
+  """column name"""
+  id
+
+  """column name"""
+  updated_at
+
+  """column name"""
+  user_id
+}
+
+"""
+input type for updating data in table "user_ping"
+"""
+input user_ping_set_input {
+  created_at: timestamptz
+  id: uuid
+  updated_at: timestamptz
+  user_id: Int
+}
+
+"""aggregate stddev on columns"""
+type user_ping_stddev_fields {
+  user_id: Float
+}
+
+"""
+order by stddev() on columns of table "user_ping"
+"""
+input user_ping_stddev_order_by {
+  user_id: order_by
+}
+
+"""aggregate stddev_pop on columns"""
+type user_ping_stddev_pop_fields {
+  user_id: Float
+}
+
+"""
+order by stddev_pop() on columns of table "user_ping"
+"""
+input user_ping_stddev_pop_order_by {
+  user_id: order_by
+}
+
+"""aggregate stddev_samp on columns"""
+type user_ping_stddev_samp_fields {
+  user_id: Float
+}
+
+"""
+order by stddev_samp() on columns of table "user_ping"
+"""
+input user_ping_stddev_samp_order_by {
+  user_id: order_by
+}
+
+"""aggregate sum on columns"""
+type user_ping_sum_fields {
+  user_id: Int
+}
+
+"""
+order by sum() on columns of table "user_ping"
+"""
+input user_ping_sum_order_by {
+  user_id: order_by
+}
+
+"""
+update columns of table "user_ping"
+"""
+enum user_ping_update_column {
+  """column name"""
+  created_at
+
+  """column name"""
+  id
+
+  """column name"""
+  updated_at
+
+  """column name"""
+  user_id
+}
+
+"""aggregate var_pop on columns"""
+type user_ping_var_pop_fields {
+  user_id: Float
+}
+
+"""
+order by var_pop() on columns of table "user_ping"
+"""
+input user_ping_var_pop_order_by {
+  user_id: order_by
+}
+
+"""aggregate var_samp on columns"""
+type user_ping_var_samp_fields {
+  user_id: Float
+}
+
+"""
+order by var_samp() on columns of table "user_ping"
+"""
+input user_ping_var_samp_order_by {
+  user_id: order_by
+}
+
+"""aggregate variance on columns"""
+type user_ping_variance_fields {
+  user_id: Float
+}
+
+"""
+order by variance() on columns of table "user_ping"
+"""
+input user_ping_variance_order_by {
+  user_id: order_by
+}
+
+"""
+primary key columns input for table: "user"
+"""
+input user_pk_columns_input {
+  """自增的id"""
+  id: Int!
+}
+
+"""
+select columns of table "user"
+"""
+enum user_select_column {
+  """column name"""
+  avatar
+
+  """column name"""
+  citizen_xp
+
+  """column name"""
+  country_code
+
+  """column name"""
+  created_at
+
+  """column name"""
+  email
+
+  """column name"""
+  encrypted_password
+
+  """column name"""
+  first_name
+
+  """column name"""
+  hero_authority
+
+  """column name"""
+  id
+
+  """column name"""
+  last_good_deed
+
+  """column name"""
+  last_name
+
+  """column name"""
+  one_word_blurb
+
+  """column name"""
+  phone
+
+  """column name"""
+  position
+
+  """column name"""
+  profile_name
+
+  """column name"""
+  unique_id
+
+  """column name"""
+  updated_at
+}
+
+"""
+input type for updating data in table "user"
+"""
+input user_set_input {
+  avatar: String
+  citizen_xp: Int
+  country_code: String
+  created_at: timestamptz
+  email: String
+  encrypted_password: String
+  first_name: String
+  hero_authority: Boolean
+  id: Int
+  last_good_deed: String
+  last_name: String
+  one_word_blurb: String
+  phone: String
+  position: geometry
+  profile_name: String
+  unique_id: String
+  updated_at: timestamptz
+}
+
+"""aggregate stddev on columns"""
+type user_stddev_fields {
+  citizen_xp: Float
+  id: Float
+}
+
+"""
+order by stddev() on columns of table "user"
+"""
+input user_stddev_order_by {
+  citizen_xp: order_by
+  id: order_by
+}
+
+"""aggregate stddev_pop on columns"""
+type user_stddev_pop_fields {
+  citizen_xp: Float
+  id: Float
+}
+
+"""
+order by stddev_pop() on columns of table "user"
+"""
+input user_stddev_pop_order_by {
+  citizen_xp: order_by
+  id: order_by
+}
+
+"""aggregate stddev_samp on columns"""
+type user_stddev_samp_fields {
+  citizen_xp: Float
+  id: Float
+}
+
+"""
+order by stddev_samp() on columns of table "user"
+"""
+input user_stddev_samp_order_by {
+  citizen_xp: order_by
+  id: order_by
+}
+
+"""aggregate sum on columns"""
+type user_sum_fields {
+  citizen_xp: Int
+  id: Int
+}
+
+"""
+order by sum() on columns of table "user"
+"""
+input user_sum_order_by {
+  citizen_xp: order_by
+  id: order_by
+}
+
+"""
+update columns of table "user"
+"""
+enum user_update_column {
+  """column name"""
+  avatar
+
+  """column name"""
+  citizen_xp
+
+  """column name"""
+  country_code
+
+  """column name"""
+  created_at
+
+  """column name"""
+  email
+
+  """column name"""
+  encrypted_password
+
+  """column name"""
+  first_name
+
+  """column name"""
+  hero_authority
+
+  """column name"""
+  id
+
+  """column name"""
+  last_good_deed
+
+  """column name"""
+  last_name
+
+  """column name"""
+  one_word_blurb
+
+  """column name"""
+  phone
+
+  """column name"""
+  position
+
+  """column name"""
+  profile_name
+
+  """column name"""
+  unique_id
+
+  """column name"""
+  updated_at
+}
+
+"""aggregate var_pop on columns"""
+type user_var_pop_fields {
+  citizen_xp: Float
+  id: Float
+}
+
+"""
+order by var_pop() on columns of table "user"
+"""
+input user_var_pop_order_by {
+  citizen_xp: order_by
+  id: order_by
+}
+
+"""aggregate var_samp on columns"""
+type user_var_samp_fields {
+  citizen_xp: Float
+  id: Float
+}
+
+"""
+order by var_samp() on columns of table "user"
+"""
+input user_var_samp_order_by {
+  citizen_xp: order_by
+  id: order_by
+}
+
+"""aggregate variance on columns"""
+type user_variance_fields {
+  citizen_xp: Float
+  id: Float
+}
+
+"""
+order by variance() on columns of table "user"
+"""
+input user_variance_order_by {
+  citizen_xp: order_by
+  id: order_by
+}
+
+input userInput {
+  avatar: String!
+  country_code: String!
+  email: String!
+  encrypted_password: String!
+  first_name: String!
+  hero_exist: Boolean!
+  last_good_deed: String!
+  last_name: String!
+  one_word_blurb: String!
+  phone: String!
+  profile_name: String!
+  unique_id: String!
+}
+
+type userOutput {
+  accessToken: String!
+  hero_authority: Boolean!
+}
+
+scalar uuid
+
+"""
+expression to compare columns of type uuid. All fields are combined with logical 'AND'.
+"""
+input uuid_comparison_exp {
+  _eq: uuid
+  _gt: uuid
+  _gte: uuid
+  _in: [uuid!]
+  _is_null: Boolean
+  _lt: uuid
+  _lte: uuid
+  _neq: uuid
+  _nin: [uuid!]
+}
