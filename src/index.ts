@@ -3,9 +3,11 @@ import * as fs from 'fs'
 import * as path from 'path'
 import meow = require('meow')
 import mkdirp = require('mkdirp')
-import { introspectionQuery } from 'graphql/utilities/introspectionQuery'
-import { buildClientSchema } from 'graphql/utilities/buildClientSchema'
-import { printSchema } from 'graphql/utilities/schemaPrinter'
+import {
+  buildClientSchema,
+  printSchema,
+  getIntrospectionQuery,
+} from 'graphql/utilities'
 import * as query from 'querystringify'
 
 /**
@@ -59,7 +61,7 @@ export async function getRemoteSchema(
     const { data, errors } = await fetch(endpoint, {
       method: options.method,
       headers: options.headers,
-      body: JSON.stringify({ query: introspectionQuery }),
+      body: JSON.stringify({ query: getIntrospectionQuery() }),
     }).then(res => res.json())
 
     if (errors) {
