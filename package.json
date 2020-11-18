@@ -41,7 +41,7 @@
     "jest": "^23.6.0",
     "jest-fetch-mock": "^2.1.0",
     "prettier": "^1.15.3",
-    "semantic-release": "^15.12.4",
+    "semantic-release": "^17.2.3",
     "ts-jest": "^23.10.5",
     "ts-node": "^7.0.1",
     "typescript": "^3.1.3"
