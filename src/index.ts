@@ -79,7 +79,8 @@ export async function getRemoteSchema(
       }
     }
   } catch (err) {
-    return { status: 'err', message: err.message }
+    console.log({ status: 'err', message: err.message });
+    throw err;
   }
 }
 
