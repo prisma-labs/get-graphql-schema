@@ -63,7 +63,8 @@ export async function getRemoteSchema(
     }).then(res => res.json())
 
     if (errors) {
-      return { status: 'err', message: JSON.stringify(errors, null, 2) }
+      console.log({ status: 'err', message: JSON.stringify(errors, null, 2) });
+      throw new Error(JSON.stringify(errors, null, 2));
     }
 
     if (options.json) {
@@ -79,7 +80,8 @@ export async function getRemoteSchema(
       }
     }
   } catch (err) {
-    return { status: 'err', message: err.message }
+    console.log({ status: 'err', message: err.message });
+    throw err;
   }
 }
 
