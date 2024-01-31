@@ -22,8 +22,9 @@ npm install -g get-graphql-schema
   Options:
     --header, -h    Add a custom header (ex. 'X-API-KEY=ABC123'), can be used multiple times
     --json, -j      Output in JSON format (based on introspection query)
-    --version, -v   Print version of get-graphql-schema
-
+    --method        Use method (GET,POST, PUT, DELETE)
+    --output       Save schema to file
+    --allowInsecure, -k  Ignore invalid and self-signed certificate checks.
 ```
 
 ## Help & Community [![Slack Status](https://slack.graph.cool/badge.svg)](https://slack.graph.cool)
