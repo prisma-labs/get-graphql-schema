@@ -14,7 +14,8 @@ Options:
   --header, -h    Add a custom header (ex. 'X-API-KEY=ABC123'), can be used multiple times
   --json, -j      Output in JSON format (based on introspection query)
   --method        Use method (GET,POST, PUT, DELETE)
-  --output       Save schema to file.
+  --output       Save schema to file
+  --allowInsecure, -k  Ignore invalid and self-signed certificate checks.
 `,
   {
     flags: {
@@ -33,6 +34,10 @@ Options:
       },
       output: {
         type: 'string',
+      },
+      allowInsecure: {
+        type: 'boolean',
+        alias: 'k',
       },
     },
   },
@@ -68,6 +73,7 @@ export async function main(cli: meow.Result): Promise<void> {
     method: cli.flags.method,
     headers,
     json: cli.flags.json,
+    allowInsecure: cli.flags.allowInsecure,
   })
 
   if (schema.status === 'err') {
