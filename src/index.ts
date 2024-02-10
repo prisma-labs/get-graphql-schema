@@ -1,4 +1,5 @@
 import fetch from 'node-fetch'
+import * as https from 'https';
 import * as fs from 'fs'
 import * as path from 'path'
 import meow = require('meow')
@@ -40,6 +41,7 @@ interface Options {
   method?: 'GET' | 'POST' | 'PUT' | 'DELETE'
   headers?: { [key: string]: string }
   json?: boolean
+  allowInsecure: boolean
 }
 
 /**
@@ -56,7 +58,12 @@ export async function getRemoteSchema(
   { status: 'ok'; schema: string } | { status: 'err'; message: string }
 > {
   try {
+    const agent = new https.Agent({
+      rejectUnauthorized: !options.allowInsecure,
+    });
+
     const { data, errors } = await fetch(endpoint, {
+      agent,
       method: options.method,
       headers: options.headers,
       body: JSON.stringify({ query: introspectionQuery }),
